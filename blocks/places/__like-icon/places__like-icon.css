@@ -9,5 +9,5 @@
 }
 
 .places__like-icon:hover {
-  background-image: url(../../../images/Like_hover.svg);
+  opacity: 0.5;
 }

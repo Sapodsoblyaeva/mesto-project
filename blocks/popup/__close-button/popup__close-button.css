@@ -10,7 +10,7 @@
 }
 
 .popup__close-button:hover {
-  background-image: url(../../../images/Close\ Icon_hover.png);
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 779px) {

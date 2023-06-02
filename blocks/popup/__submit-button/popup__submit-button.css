@@ -17,5 +17,5 @@
 }
 
 .popup__submit-button:hover {
-  background-image: url(../../../images/Submit\ Button_hover.png);
+  opacity: 0.8;
 }
