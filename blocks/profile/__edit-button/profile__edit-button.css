@@ -19,3 +19,8 @@
     background-image: url(../../../images/Edit\ Button.png);
   }
 }
+
+.profile__edit-button:hover {
+  background-image: url(../../../images/Edit\ Button_hover.png);
+  opacity: 0.6;
+}

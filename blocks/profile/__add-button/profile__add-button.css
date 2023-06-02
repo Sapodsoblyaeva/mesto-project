@@ -19,3 +19,7 @@
     max-width: calc(282px - 4px);
   }
 }
+
+.profile__add-button:hover {
+  opacity: 0.6;
+}
