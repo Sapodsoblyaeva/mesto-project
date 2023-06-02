@@ -1,0 +1,12 @@
+.places__cards {
+  background: #ffffff;
+  max-width: 282px;
+  width: 100%;
+  height: 361px;
+  display: block;
+  border-radius: 10px;
+}
+
+.places__cards::before {
+  background: #ffffff;
+}

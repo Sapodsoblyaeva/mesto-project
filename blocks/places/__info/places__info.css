@@ -1,0 +1,9 @@
+.places__info {
+  margin: 25px 0;
+  max-width: 282px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

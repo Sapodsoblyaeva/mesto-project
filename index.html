@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+  </head>
+  <body class="page">
+    <section class="popup popup_opened">
+      <form class="popup__form">
+        <div class="popup__container">
+          <img
+            class="popup__close-button"
+            src="./images/Close Icon.png"
+            alt="close button"
+          />
+          <div class="popup__info-container">
+            <h2 class="popup__heading">Редактировать профиль</h2>
+            <fieldset class="popup__input-container">
+              <input type="text" class="popup__info" />
+              <input type="text" class="popup__info" />
+            </fieldset>
+          </div>
+          <fieldset class="popup__handlers">
+            <button class="popup__submit-button" type="submit"></button>
+          </fieldset>
+        </div>
+      </form>
+    </section>
+    <header class="header">
+      <img
+        class="logo logo_place_header>"
+        src="./images/logo_theme_dark.svg"
+        alt="Логотип Mesto"
+      />
+      <div class="header__divider"></div>
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img
+          class="profile__avatar"
+          src="./images/Avatar.jpg"
+          alt="Здесь должен быть Аватар"
+        />
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button" type="submit"></button>
+        </div>
+        <p class="profile__occupation">Исследователь океана</p>
+        <button class="profile__add-button" type="submit"></button>
+      </section>
+      <section class="places">
+        <article class="places__cards">
+          <img
+            class="places__image"
+            src="./images/Dombai.jpeg"
+            alt="Вид на Горы в Домбае"
+          />
+          <div class="places__info">
+            <h2 class="places__name">Домбай</h2>
+            <span class="places__like-icon"></span>
+          </div>
+        </article>
+        <article class="places__cards">
+          <img
+            class="places__image"
+            src="./images/Nizhniy Arkhyz.jpeg"
+            alt="Храм в Нижнем Архызе"
+          />
+          <div class="places__info">
+            <h2 class="places__name">Нижний Архыз</h2>
+            <span class="places__like-icon"></span>
+          </div>
+        </article>
+        <article class="places__cards">
+          <img class="places__image" src="./images/Adygeya.jpeg" alt="Адыгея" />
+          <div class="places__info">
+            <h2 class="places__name">Адыгея</h2>
+            <span class="places__like-icon"></span>
+          </div>
+        </article>
+        <article class="places__cards">
+          <img
+            class="places__image"
+            src="./images/Gelendzhik.jpeg"
+            alt="Вид на бухту в Геленджике"
+          />
+          <div class="places__info">
+            <h2 class="places__name">Геленджик</h2>
+            <span class="places__like-icon"></span>
+          </div>
+        </article>
+        <article class="places__cards">
+          <img
+            class="places__image"
+            src="./images/Saint-Petersburg.jpeg"
+            alt="Исакиеевский собор в Сантк-Петербурге"
+          />
+          <div class="places__info">
+            <h2 class="places__name">Санкт-Петербург</h2>
+            <span class="places__like-icon"></span>
+          </div>
+        </article>
+        <article class="places__cards">
+          <img
+            class="places__image"
+            src="./images/Krasnaya Polyana.jpeg"
+            alt="Красная Поляна в Сочи"
+          />
+          <div class="places__info">
+            <h2 class="places__name">Красная Поляна</h2>
+            <span class="places__like-icon"></span>
+          </div>
+        </article>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__author">&copy; 2023 Mesto Russia</p>
+    </footer>
+  </body>
+</html>

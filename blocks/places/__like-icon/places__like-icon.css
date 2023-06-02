@@ -1,0 +1,13 @@
+.places__like-icon {
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/Like_disabled.svg);
+  background-size: 22px 19px;
+  padding-right: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.places__like-icon:hover {
+  background-image: url(../../../images/Like_hover.svg);
+}
