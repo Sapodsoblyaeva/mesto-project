@@ -10,9 +10,10 @@
   background-color: #000000;
   background-image: url(../../../images/Add\ Button.png);
   background-position: center;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 1023px) {
   .profile__add-button {
     margin: 36px auto 0;
     background-image: url(../../../images/Add\ Button_Mobile.png);

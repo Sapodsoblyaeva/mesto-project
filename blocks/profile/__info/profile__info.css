@@ -5,10 +5,10 @@
   column-gap: 18px;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 1023px) {
   .profile__info {
     max-width: 282px;
-    margin: 26px auto 0;
+    margin: 26px 0 0;
     grid-template-columns: 189px 10px;
     column-gap: 10px;
   }

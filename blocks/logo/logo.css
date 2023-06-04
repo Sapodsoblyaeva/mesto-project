@@ -4,10 +4,11 @@
   margin-bottom: 41px;
 }
 
-@media screen and (max-width: 779px) {
+@media screen and (max-width: 1023px) {
   .logo {
     width: 103.74px;
     height: 24.4px;
-    margin: 0 0 31.6px 27px;
+    margin: 0 0 0 27px;
+    margin-bottom: calc(31.6px - 1px);
   }
 }

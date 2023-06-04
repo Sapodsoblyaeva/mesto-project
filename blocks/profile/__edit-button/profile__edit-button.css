@@ -10,13 +10,13 @@
   background-image: url(../../../images/Edit\ Button.png);
   background-position: center;
   outline: 1px solid white;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 1023px) {
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    background-image: url(../../../images/Edit\ Button.png);
   }
 }
 

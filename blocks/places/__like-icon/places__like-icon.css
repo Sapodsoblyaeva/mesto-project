@@ -3,9 +3,10 @@
   height: 19px;
   background-image: url(../../../images/Like_disabled.svg);
   background-size: 22px 19px;
-  padding-right: 30px;
+  margin-right: 30px;
   background-repeat: no-repeat;
   background-position: center;
+  cursor: pointer;
 }
 
 .places__like-icon:hover {

@@ -7,11 +7,9 @@
   margin: 48px auto 37px;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 1023px) {
   .popup__handlers {
     max-width: 238px;
-    font-size: 18px;
-    line-height: 22px;
     margin: 45px auto 25px;
   }
 }
