@@ -45,7 +45,11 @@
           />
           <div class="places__info">
             <h2 class="places__name">Домбай</h2>
-            <span class="places__like-icon"></span>
+            <button
+              class="places__like-icon"
+              type="button"
+              aria-label="Кнопка like"
+            ></button>
           </div>
         </div>
         <div class="places__cards">
@@ -56,14 +60,22 @@
           />
           <div class="places__info">
             <h2 class="places__name">Нижний Архыз</h2>
-            <span class="places__like-icon places__like-icon_enabled"></span>
+            <button
+              class="places__like-icon places__like-icon_enabled"
+              type="button"
+              aria-label="Кнопка like"
+            ></button>
           </div>
         </div>
         <div class="places__cards">
           <img class="places__image" src="./images/Adygeya.jpeg" alt="Адыгея" />
           <div class="places__info">
             <h2 class="places__name">Адыгея</h2>
-            <span class="places__like-icon"></span>
+            <button
+              class="places__like-icon"
+              type="button"
+              aria-label="Кнопка like"
+            ></button>
           </div>
         </div>
         <div class="places__cards">
@@ -74,7 +86,11 @@
           />
           <div class="places__info">
             <h2 class="places__name">Геленджик</h2>
-            <span class="places__like-icon"></span>
+            <button
+              class="places__like-icon"
+              type="button"
+              aria-label="Кнопка like"
+            ></button>
           </div>
         </div>
         <div class="places__cards">
@@ -85,7 +101,11 @@
           />
           <div class="places__info">
             <h2 class="places__name">Санкт-Петербург</h2>
-            <span class="places__like-icon"></span>
+            <button
+              class="places__like-icon"
+              type="button"
+              aria-label="Кнопка like"
+            ></button>
           </div>
         </div>
         <div class="places__cards">
@@ -96,7 +116,11 @@
           />
           <div class="places__info">
             <h2 class="places__name">Красная Поляна</h2>
-            <span class="places__like-icon"></span>
+            <button
+              class="places__like-icon"
+              type="button"
+              aria-label="Кнопка like"
+            ></button>
           </div>
         </div>
       </section>
@@ -104,13 +128,13 @@
     <footer class="footer">
       <p class="footer__author">&copy; 2023 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_opened">
       <div class="popup__container">
-        <img
+        <button
           class="popup__close-button"
-          src="./images/Close_Icon.png"
-          alt="close button"
-        />
+          type="button"
+          aria-label="Кнопка Закрыть"
+        ></button>
         <form class="popup__form" name="profile-editor" method="POST">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <fieldset class="popup__input-container">

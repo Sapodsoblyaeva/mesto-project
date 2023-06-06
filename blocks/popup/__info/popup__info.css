@@ -8,6 +8,7 @@
   padding: 0;
   padding-bottom: 13px;
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .popup__info:last-child {

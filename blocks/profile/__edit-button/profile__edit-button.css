@@ -11,6 +11,9 @@
   background-position: center;
   outline: 1px solid white;
   cursor: pointer;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 1023px) {
