@@ -1,0 +1,13 @@
+@keyframes slow-closure {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.popup_closed {
+animation: slow-closure 0.5s;
+}

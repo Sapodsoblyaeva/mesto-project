@@ -5,6 +5,7 @@
   height: 361px;
   display: block;
   border-radius: 10px;
+  position: relative;
 }
 
 .places__cards::before {

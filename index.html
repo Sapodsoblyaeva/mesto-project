@@ -43,6 +43,11 @@
             src="./images/Dombai.jpeg"
             alt="Вид на Горы в Домбае"
           />
+          <button
+          class="places__delete-button"
+          type="button"
+          aria-label="Кнопка Удалить"
+        ></button>
           <div class="places__info">
             <h2 class="places__name">Домбай</h2>
             <button
@@ -58,6 +63,11 @@
             src="./images/Nizhniy_Arkhyz.jpeg"
             alt="Храм в Нижнем Архызе"
           />
+          <button
+          class="places__delete-button"
+          type="button"
+          aria-label="Кнопка Удалить"
+        ></button>
           <div class="places__info">
             <h2 class="places__name">Нижний Архыз</h2>
             <button
@@ -69,6 +79,11 @@
         </div>
         <div class="places__cards">
           <img class="places__image" src="./images/Adygeya.jpeg" alt="Адыгея" />
+          <button
+          class="places__delete-button"
+          type="button"
+          aria-label="Кнопка Удалить"
+        ></button>
           <div class="places__info">
             <h2 class="places__name">Адыгея</h2>
             <button
@@ -84,6 +99,11 @@
             src="./images/Gelendzhik.jpeg"
             alt="Вид на бухту в Геленджике"
           />
+          <button
+          class="places__delete-button"
+          type="button"
+          aria-label="Кнопка Удалить"
+        ></button>
           <div class="places__info">
             <h2 class="places__name">Геленджик</h2>
             <button
@@ -99,6 +119,11 @@
             src="./images/Saint-Petersburg.jpeg"
             alt="Исакиеевский собор в Сантк-Петербурге"
           />
+          <button
+          class="places__delete-button"
+          type="button"
+          aria-label="Кнопка Удалить"
+        ></button>
           <div class="places__info">
             <h2 class="places__name">Санкт-Петербург</h2>
             <button
@@ -114,6 +139,11 @@
             src="./images/Krasnaya_Polyana.jpeg"
             alt="Красная Поляна в Сочи"
           />
+          <button
+          class="places__delete-button"
+          type="button"
+          aria-label="Кнопка Удалить"
+        ></button>
           <div class="places__info">
             <h2 class="places__name">Красная Поляна</h2>
             <button
@@ -128,7 +158,7 @@
     <footer class="footer">
       <p class="footer__author">&copy; 2023 Mesto Russia</p>
     </footer>
-    <div class="popup popup_opened">
+    <div class="popup popup__closed">
       <div class="popup__container">
         <button
           class="popup__close-button"
@@ -165,5 +195,43 @@
         </form>
       </div>
     </div>
+    <div class="popup popup__add-places">
+      <div class="popup__container">
+        <button
+          class="popup__close-button popup__close-button-places"
+          type="button"
+          aria-label="Кнопка Закрыть"
+        ></button>
+        <form class="popup__form" name="places__adder" method="POST">
+          <h2 class="popup__heading">Новое место</h2>
+          <fieldset class="popup__input-container">
+            <input
+              type="text"
+              class="popup__info"
+              id="name"
+              name="name"
+              placeholder="Название"
+            />
+            <input
+              type="text"
+              class="popup__info"
+              id="about-yourself"
+              name="about-yourself"
+              placeholder="Ссылка на картинку"
+            />
+          </fieldset>
+          <div class="popup__handlers">
+            <button
+              class="popup__submit-button"
+              type="submit"
+              aria-label="Кнопка Создать"
+            >
+              Создать
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="./script/script.js"></script>
   </body>
 </html>
