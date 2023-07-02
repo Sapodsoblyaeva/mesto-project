@@ -37,11 +37,10 @@
         ></button>
       </section>
       <section class="places">
+        <template id="places__cards">
         <div class="places__cards">
           <img
             class="places__image"
-            src="./images/Dombai.jpeg"
-            alt="Вид на Горы в Домбае"
           />
           <button
           class="places__delete-button"
@@ -49,7 +48,7 @@
           aria-label="Кнопка Удалить"
         ></button>
           <div class="places__info">
-            <h2 class="places__name">Домбай</h2>
+            <h2 class="places__name"></h2>
             <button
               class="places__like-icon"
               type="button"
@@ -57,108 +56,13 @@
             ></button>
           </div>
         </div>
-        <div class="places__cards">
-          <img
-            class="places__image"
-            src="./images/Nizhniy_Arkhyz.jpeg"
-            alt="Храм в Нижнем Архызе"
-          />
-          <button
-          class="places__delete-button"
-          type="button"
-          aria-label="Кнопка Удалить"
-        ></button>
-          <div class="places__info">
-            <h2 class="places__name">Нижний Архыз</h2>
-            <button
-              class="places__like-icon places__like-icon_enabled"
-              type="button"
-              aria-label="Кнопка like"
-            ></button>
-          </div>
-        </div>
-        <div class="places__cards">
-          <img class="places__image" src="./images/Adygeya.jpeg" alt="Адыгея" />
-          <button
-          class="places__delete-button"
-          type="button"
-          aria-label="Кнопка Удалить"
-        ></button>
-          <div class="places__info">
-            <h2 class="places__name">Адыгея</h2>
-            <button
-              class="places__like-icon"
-              type="button"
-              aria-label="Кнопка like"
-            ></button>
-          </div>
-        </div>
-        <div class="places__cards">
-          <img
-            class="places__image"
-            src="./images/Gelendzhik.jpeg"
-            alt="Вид на бухту в Геленджике"
-          />
-          <button
-          class="places__delete-button"
-          type="button"
-          aria-label="Кнопка Удалить"
-        ></button>
-          <div class="places__info">
-            <h2 class="places__name">Геленджик</h2>
-            <button
-              class="places__like-icon"
-              type="button"
-              aria-label="Кнопка like"
-            ></button>
-          </div>
-        </div>
-        <div class="places__cards">
-          <img
-            class="places__image"
-            src="./images/Saint-Petersburg.jpeg"
-            alt="Исакиеевский собор в Сантк-Петербурге"
-          />
-          <button
-          class="places__delete-button"
-          type="button"
-          aria-label="Кнопка Удалить"
-        ></button>
-          <div class="places__info">
-            <h2 class="places__name">Санкт-Петербург</h2>
-            <button
-              class="places__like-icon"
-              type="button"
-              aria-label="Кнопка like"
-            ></button>
-          </div>
-        </div>
-        <div class="places__cards">
-          <img
-            class="places__image"
-            src="./images/Krasnaya_Polyana.jpeg"
-            alt="Красная Поляна в Сочи"
-          />
-          <button
-          class="places__delete-button"
-          type="button"
-          aria-label="Кнопка Удалить"
-        ></button>
-          <div class="places__info">
-            <h2 class="places__name">Красная Поляна</h2>
-            <button
-              class="places__like-icon"
-              type="button"
-              aria-label="Кнопка like"
-            ></button>
-          </div>
-        </div>
+        </template>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__author">&copy; 2023 Mesto Russia</p>
     </footer>
-    <div class="popup popup__closed">
+    <div class="popup">
       <div class="popup__container">
         <button
           class="popup__close-button"
@@ -174,6 +78,7 @@
               id="name"
               name="name"
               placeholder="Жак-Ив Кусто"
+              required
             />
             <input
               type="text"
@@ -181,6 +86,7 @@
               id="about-yourself"
               name="about-yourself"
               placeholder="Исследователь океана"
+              required
             />
           </fieldset>
           <div class="popup__handlers">
@@ -195,7 +101,7 @@
         </form>
       </div>
     </div>
-    <div class="popup popup__add-places">
+    <div class="popup add-places">
       <div class="popup__container">
         <button
           class="popup__close-button popup__close-button-places"
@@ -208,21 +114,23 @@
             <input
               type="text"
               class="popup__info"
-              id="name"
-              name="name"
+              id="place-name"
+              name="place-name"
               placeholder="Название"
+              required
             />
             <input
               type="text"
               class="popup__info"
-              id="about-yourself"
-              name="about-yourself"
+              id="photo-link"
+              name="photo-link"
               placeholder="Ссылка на картинку"
+              required
             />
           </fieldset>
           <div class="popup__handlers">
             <button
-              class="popup__submit-button"
+              class="popup__submit-button popup__create-button"
               type="submit"
               aria-label="Кнопка Создать"
             >
@@ -230,6 +138,16 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+    <div class="image-popup">
+      <div class="image-popup__container">
+        <button
+          class="image-popup__close-button"
+          type="button"
+          aria-label="Кнопка Закрыть"
+        ></button>
+        <img class="image-popup__photo">
       </div>
     </div>
     <script src="./script/script.js"></script>
