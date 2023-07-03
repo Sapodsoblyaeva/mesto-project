@@ -9,5 +9,5 @@
 }
 
 .popup_closed {
-animation: slow-closure 0.5s;
+  animation: slow-closure 0.5s;
 }

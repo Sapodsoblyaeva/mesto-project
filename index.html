@@ -38,24 +38,22 @@
       </section>
       <section class="places">
         <template id="places__cards">
-        <div class="places__cards">
-          <img
-            class="places__image"
-          />
-          <button
-          class="places__delete-button"
-          type="button"
-          aria-label="Кнопка Удалить"
-        ></button>
-          <div class="places__info">
-            <h2 class="places__name"></h2>
+          <div class="places__cards">
+            <img class="places__image" />
             <button
-              class="places__like-icon"
+              class="places__delete-button"
               type="button"
-              aria-label="Кнопка like"
+              aria-label="Кнопка Удалить"
             ></button>
+            <div class="places__info">
+              <h2 class="places__name"></h2>
+              <button
+                class="places__like-icon"
+                type="button"
+                aria-label="Кнопка like"
+              ></button>
+            </div>
           </div>
-        </div>
         </template>
       </section>
     </main>
@@ -69,7 +67,12 @@
           type="button"
           aria-label="Кнопка Закрыть"
         ></button>
-        <form class="popup__form" name="profile-editor" method="POST">
+        <form
+          class="popup__form"
+          name="profile-editor"
+          method="POST"
+          onSubmit="return Complete();"
+        >
           <h2 class="popup__heading">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
             <input
@@ -147,7 +150,8 @@
           type="button"
           aria-label="Кнопка Закрыть"
         ></button>
-        <img class="image-popup__photo">
+        <img class="image-popup__photo" src="#" alt="" />
+        <h2 class="image-popup__text"></h2>
       </div>
     </div>
     <script src="./script/script.js"></script>
