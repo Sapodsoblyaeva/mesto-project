@@ -60,19 +60,14 @@
     <footer class="footer">
       <p class="footer__author">&copy; 2023 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup editor-form">
       <div class="popup__container">
         <button
           class="popup__close-button"
           type="button"
           aria-label="Кнопка Закрыть"
         ></button>
-        <form
-          class="popup__form"
-          name="profile-editor"
-          method="POST"
-          onSubmit="return Complete();"
-        >
+        <form class="popup__form" name="profile-editor" method="POST">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
             <input
@@ -107,11 +102,15 @@
     <div class="popup add-places">
       <div class="popup__container">
         <button
-          class="popup__close-button popup__close-button-places"
+          class="popup__close-button"
           type="button"
           aria-label="Кнопка Закрыть"
         ></button>
-        <form class="popup__form" name="places__adder" method="POST">
+        <form
+          class="popup__form add-places__form"
+          name="place__adder"
+          method="POST"
+        >
           <h2 class="popup__heading">Новое место</h2>
           <fieldset class="popup__input-container">
             <input
@@ -143,10 +142,10 @@
         </form>
       </div>
     </div>
-    <div class="image-popup">
+    <div class="image-popup popup">
       <div class="image-popup__container">
         <button
-          class="image-popup__close-button"
+          class="image-popup__close-button popup__close-button"
           type="button"
           aria-label="Кнопка Закрыть"
         ></button>
@@ -154,6 +153,7 @@
         <h2 class="image-popup__text"></h2>
       </div>
     </div>
+    <script src="./script/cards.js"></script>
     <script src="./script/script.js"></script>
   </body>
 </html>
