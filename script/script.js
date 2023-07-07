@@ -63,7 +63,8 @@ function submitPopup(event) {
 formElement.addEventListener("submit", submitPopup);
 
 function createCard(cardName, cardLink) {
-  //копировать темплейт  const cardItem = cardsTemplate
+  //копировать темплейт
+  const cardItem = cardsTemplate
     .querySelector(".places__cards")
     .cloneNode(true);
   const placeName = cardItem.querySelector(".places__name");
