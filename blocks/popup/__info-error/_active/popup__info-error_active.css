@@ -1,0 +1,15 @@
+.popup__info-error_active {
+  display: block;
+  font-size: 12px;
+  color: #ff0000;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 5px;
+  margin: 0;
+}
+
+
+.popup__info-error_active:first-of-type {
+  margin-bottom: 13px;
+}

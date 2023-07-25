@@ -1,0 +1,7 @@
+.popup__submit-button_inactive {
+  background-color: #fff;
+  border-radius: 2px;
+  border: 1px solid #c4c4c4;
+  color: #c4c4c4;
+  flex-shrink: 0;
+}
