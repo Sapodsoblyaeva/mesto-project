@@ -14,7 +14,7 @@ function addData(nameValue, occupationValue) {
 
 function closeByEsc(evt) {
   if (evt.key === "Escape") {
-    const openedPopup = document.querySelector('.popup_opened')
+    const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 }

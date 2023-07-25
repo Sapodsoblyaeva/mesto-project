@@ -13,13 +13,7 @@ import { enableValidation } from "./validate.js";
 
 import { setInitialCards, addCard } from "./card.js";
 
-enableValidation({
-  formSelector: ".popup__form",
-  inputSelector: ".popup__info",
-  submitButtonSelector: ".popup__submit-button",
-  inactiveButtonClass: "popup__submit-button_inactive",
-  inputErrorClass: "popup__info-error",
-});
+enableValidation();
 
 const editPopupButton = document.querySelector(".profile__edit-button");
 const closePopupButtons = Array.from(

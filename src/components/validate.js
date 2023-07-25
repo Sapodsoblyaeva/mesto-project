@@ -1,18 +1,28 @@
+const settings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__info",
+  submitButtonSelector: ".popup__submit-button",
+  inactiveButtonClass: "popup__submit-button_inactive",
+  inputErrorClass: "popup__info-error",
+  inputErrorTypeClass: "popup__info_type_error",
+  activeInputErrorClass: "popup__info-error_active",
+};
+
 function showInputError(formElement, inputElement, errorMessage) {
   //подставляет конкретное id пустого поля, которое выведется
   //ошибкой пд полем ввода, например place-name-error
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add("popup__info_type_error");
+  inputElement.classList.add(settings.inputErrorTypeClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add("popup__info-error_active");
+  errorElement.classList.add(settings.activeInputErrorClass);
 }
 
 function hideInputError(formElement, inputElement) {
   //подставляет конкретное id пустого поля,
   //которое обнулится после того как валидация пройдет
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove("popup__info_type_error");
-  errorElement.classList.remove("popup__info-error_active");
+  inputElement.classList.remove(settings.inputErrorTypeClass);
+  errorElement.classList.remove(settings.activeInputErrorClass);
   errorElement.textContent = "";
 }
 
@@ -43,16 +53,18 @@ function hasInvalidInput(inputList) {
 function toggleButtonState(inputList, submitButton) {
   //меняет состояние кнопки, если все инпуты из hasInvalidInput валидны
   if (hasInvalidInput(inputList)) {
-    submitButton.classList.add("popup__submit-button_inactive");
+    submitButton.classList.add(settings.inactiveButtonClass);
   } else {
-    submitButton.classList.remove("popup__submit-button_inactive");
+    submitButton.classList.remove(settings.inactiveButtonClass);
   }
 }
 
 function setEventListeners(formElement) {
   //берет все поля ввода
-  const inputList = Array.from(formElement.querySelectorAll(".popup__info"));
-  const submitButton = formElement.querySelector(".popup__submit-button");
+  const inputList = Array.from(
+    formElement.querySelectorAll(settings.inputSelector)
+  );
+  const submitButton = formElement.querySelector(settings.submitButtonSelector);
   //изначально они пустые и невалидные
   toggleButtonState(inputList, submitButton);
   //проверяет каждое поле на валидность
@@ -65,7 +77,7 @@ function setEventListeners(formElement) {
 }
 
 function enableValidation() {
-  const formList = Array.from(document.querySelectorAll(".popup__form"));
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
   //для каждой формы при сабмите отменяет перезагрузку и
   //выполняет проверку на валидность
   formList.forEach((formElement) => {
