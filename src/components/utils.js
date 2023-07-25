@@ -1,3 +1,4 @@
+import { closePopup } from "./modal";
 const popupEditorForm = document.querySelector(".editor-form");
 const popupAddPlace = document.querySelector(".add-places");
 const formElement = document.querySelector(".popup__form");
@@ -11,4 +12,17 @@ function addData(nameValue, occupationValue) {
   profileOccupation.textContent = occupationValue;
 }
 
-export { addData, popupEditorForm, popupAddPlace, formElement, userPlaceForm };
+function handleKeyEsc(evt, popupElement) {
+  if (evt.key == "Escape") {
+    closePopup(popupElement);
+  }
+}
+
+export {
+  addData,
+  popupEditorForm,
+  popupAddPlace,
+  formElement,
+  userPlaceForm,
+  handleKeyEsc,
+};

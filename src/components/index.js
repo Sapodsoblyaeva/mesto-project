@@ -1,4 +1,4 @@
-import '../../pages/index.css';
+import "../pages/index.css";
 
 import { closePopup, submitPopup, openPopup } from "./modal.js";
 
@@ -13,6 +13,14 @@ import { enableValidation } from "./validate.js";
 
 import { setInitialCards, addCard } from "./card.js";
 
+enableValidation({
+  formSelector: ".popup__form",
+  inputSelector: ".popup__info",
+  submitButtonSelector: ".popup__submit-button",
+  inactiveButtonClass: "popup__submit-button_inactive",
+  inputErrorClass: "popup__info-error",
+});
+
 const editPopupButton = document.querySelector(".profile__edit-button");
 const closePopupButtons = Array.from(
   document.querySelectorAll(".popup__close-button")
@@ -22,14 +30,11 @@ const popups = Array.from(document.querySelectorAll(".popup"));
 
 editPopupButton.addEventListener("click", function () {
   openPopup(popupEditorForm);
-  //чтобы при открытии попапа, кнопка не работала из-за невалидности формы
-  enableValidation();
+  // handleKeyEsc(popupEditorForm);
 });
 
 addButton.addEventListener("click", function () {
   openPopup(popupAddPlace);
-  //чтобы при открытии попапа, кнопка не работала из-за невалидности формы
-  enableValidation();
 });
 
 closePopupButtons.forEach(function (elem) {
@@ -44,19 +49,11 @@ setInitialCards();
 
 userPlaceForm.addEventListener("submit", addCard);
 
-enableValidation();
-
 //чтобы закрывались попапы по эскейпу и оверлею
 popups.forEach((popup) => {
   popup.addEventListener("click", function (evt) {
     //именно таргет, иначе закрывается и по клику на сам попап
     if (evt.target === popup) {
-      closePopup(popup);
-    }
-  });
-  //именно документ, все остальное не работает
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key == "Escape") {
       closePopup(popup);
     }
   });
