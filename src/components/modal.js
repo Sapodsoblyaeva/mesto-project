@@ -1,21 +1,17 @@
 import { enableValidation } from "./validate.js";
 
-import { addData, popupEditorForm, handleKeyEsc } from "./utils.js";
+import { addData, popupEditorForm, closeByEsc } from "./utils.js";
 
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
   //именно документ, все остальное не работает
-  document.addEventListener("keydown", function (evt) {
-    handleKeyEsc(evt, popupElement);
-  });
+  document.addEventListener("keydown", closeByEsc);
 }
 
 function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
   //именно документ, все остальное не работает
-  document.removeEventListener("keydown", function (evt) {
-    handleKeyEsc(evt, popupElement);
-  });
+  document.removeEventListener("keydown", closeByEsc);
 }
 
 function submitPopup(evt) {

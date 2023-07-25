@@ -12,9 +12,10 @@ function addData(nameValue, occupationValue) {
   profileOccupation.textContent = occupationValue;
 }
 
-function handleKeyEsc(evt, popupElement) {
-  if (evt.key == "Escape") {
-    closePopup(popupElement);
+function closeByEsc(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup);
   }
 }
 
@@ -24,5 +25,5 @@ export {
   popupAddPlace,
   formElement,
   userPlaceForm,
-  handleKeyEsc,
+  closeByEsc,
 };
