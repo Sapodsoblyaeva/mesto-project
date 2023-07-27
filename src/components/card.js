@@ -1,7 +1,5 @@
 import { closePopup, openPopup } from "./modal.js";
 
-import { enableValidation } from "./validate.js";
-
 import { popupAddPlace, userPlaceForm } from "./utils.js";
 
 const initialCards = [
@@ -31,6 +29,13 @@ const initialCards = [
   },
 ];
 
+const popupImage = document.querySelector(".image-popup");
+const openingImage = document.querySelector(".image-popup__photo");
+const openingText = document.querySelector(".image-popup__text");
+const cardsOnLine = document.querySelector(".places");
+const userPlaceName = document.querySelector("#place-name");
+const userPlaceImage = document.querySelector("#photo-link");
+
 function createCard(cardName, cardLink) {
   //копировать темплейт
   const cardsTemplate = document.querySelector("#places__cards").content;
@@ -43,6 +48,7 @@ function createCard(cardName, cardLink) {
   const placeDelete = cardItem.querySelector(".places__delete-button");
   placeName.textContent = cardName;
   placeImage.src = cardLink;
+  placeImage.alt = cardName + `. Фото живописного места.`;
   //слушатель для кнопки like
   placeLike.addEventListener("click", function () {
     placeLike.classList.toggle("places__like-icon_enabled");
@@ -55,12 +61,10 @@ function createCard(cardName, cardLink) {
   });
   placeImage.addEventListener("click", function () {
     //добавляем класс для открытия попапа
-    const popupImage = document.querySelector(".image-popup");
-    const openingImage = document.querySelector(".image-popup__photo");
-    const openingText = document.querySelector(".image-popup__text");
     openPopup(popupImage);
     //выбираем какое фото отображать
     openingImage.src = placeImage.src;
+    openingImage.alt = placeImage.alt;
     openingText.textContent = placeName.textContent;
   });
   //создать карточку, не вставляя в разметку
@@ -69,7 +73,6 @@ function createCard(cardName, cardLink) {
 
 function renderCard(card) {
   //вставить в размету
-  const cardsOnLine = document.querySelector(".places");
   cardsOnLine.prepend(card);
 }
 
@@ -85,17 +88,11 @@ function addCard(event) {
   event.preventDefault();
   //чтобы окошко закрывалось при отправке формы с предварительной проверкой
   //состояния кнопки
-  if (!popupAddPlace.querySelector(".popup__submit-button_inactive")) {
-    closePopup(popupAddPlace);
-    //вставить в разметку
-    const userPlaceName = document.querySelector("#place-name");
-    const userPlaceImage = document.querySelector("#photo-link");
-    const cardNew = createCard(userPlaceName.value, userPlaceImage.value);
-    renderCard(cardNew);
-    userPlaceForm.reset();
-  } else {
-    enableValidation();
-  }
+  closePopup(popupAddPlace);
+  //вставить в разметку
+  const cardNew = createCard(userPlaceName.value, userPlaceImage.value);
+  renderCard(cardNew);
+  userPlaceForm.reset();
 }
 
 export { initialCards, setInitialCards, createCard, renderCard, addCard };

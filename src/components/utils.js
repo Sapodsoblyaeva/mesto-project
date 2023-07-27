@@ -1,13 +1,13 @@
 import { closePopup } from "./modal";
+
 const popupEditorForm = document.querySelector(".editor-form");
 const popupAddPlace = document.querySelector(".add-places");
-const formElement = document.querySelector(".popup__form");
-const userPlaceForm = document.querySelector(".add-places__form");
+const userPlaceForm = document.forms["place__adder"];
+const profileName = document.querySelector(".profile__name");
+const profileOccupation = document.querySelector(".profile__occupation");
 
-function addData(nameValue, occupationValue) {
+function addProfileData(nameValue, occupationValue) {
   //добавить имя и занятие в профайл
-  const profileName = document.querySelector(".profile__name");
-  const profileOccupation = document.querySelector(".profile__occupation");
   profileName.textContent = nameValue;
   profileOccupation.textContent = occupationValue;
 }
@@ -19,11 +19,22 @@ function closeByEsc(evt) {
   }
 }
 
+function disableButton(submitButton) {
+  submitButton.setAttribute("disabled", "disabled");
+  submitButton.classList.add("popup__submit-button_inactive");
+}
+
+function enableButton(submitButton) {
+  submitButton.removeAttribute("disabled");
+  submitButton.classList.remove("popup__submit-button_inactive");
+}
+
 export {
-  addData,
+  addProfileData,
   popupEditorForm,
   popupAddPlace,
-  formElement,
   userPlaceForm,
   closeByEsc,
+  disableButton,
+  enableButton,
 };

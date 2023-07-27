@@ -1,6 +1,7 @@
-import { enableValidation } from "./validate.js";
+import { addProfileData, popupEditorForm, closeByEsc } from "./utils.js";
 
-import { addData, popupEditorForm, closeByEsc } from "./utils.js";
+const popupName = document.querySelector("#name");
+const popupAboutYourself = document.querySelector("#about-yourself");
 
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
@@ -14,19 +15,13 @@ function closePopup(popupElement) {
   document.removeEventListener("keydown", closeByEsc);
 }
 
-function submitPopup(evt) {
+function handleProfileFormSubmit(evt) {
   //чтобы не было перезагрузки
   evt.preventDefault();
   //чтобы окошко закрывалось при отправке формы
   //добавлена проверка на заполненность и валидность полей
-  if (!popupEditorForm.querySelector(".popup__submit-button_inactive")) {
-    const popupName = document.querySelector("#name");
-    const popupAboutYourself = document.querySelector("#about-yourself");
-    closePopup(popupEditorForm);
-    addData(popupName.value, popupAboutYourself.value);
-  } else {
-    enableValidation();
-  }
+  closePopup(popupEditorForm);
+  addProfileData(popupName.value, popupAboutYourself.value);
 }
 
-export { closePopup, submitPopup, openPopup };
+export { closePopup, handleProfileFormSubmit, openPopup };
