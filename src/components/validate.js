@@ -1,5 +1,3 @@
-import { disableButton, enableButton } from "./utils.js";
-
 function showInputError(formElement, inputElement, errorMessage, obj) {
   //подставляет конкретное id пустого поля, которое выведется
   //ошибкой пд полем ввода, например place-name-error
@@ -27,6 +25,7 @@ function checkInputValidity(formElement, inputElement, obj) {
     //сброс ошибки после валидации
     inputElement.setCustomValidity("");
   }
+
   if (!inputElement.validity.valid) {
     showInputError(
       formElement,
@@ -47,12 +46,22 @@ function hasInvalidInput(inputList) {
   });
 }
 
-function toggleButtonState(inputList, submitButton) {
+function disableButton(submitButton, obj) {
+  submitButton.setAttribute("disabled", "disabled");
+  submitButton.classList.add(obj.inactiveButtonClass);
+}
+
+function enableButton(submitButton, obj) {
+  submitButton.removeAttribute("disabled");
+  submitButton.classList.remove(obj.inactiveButtonClass);
+}
+
+function toggleButtonState(inputList, submitButton, obj) {
   //меняет состояние кнопки, если все инпуты из hasInvalidInput валидны
   if (hasInvalidInput(inputList)) {
-    disableButton(submitButton);
+    disableButton(submitButton, obj);
   } else {
-    enableButton(submitButton);
+    enableButton(submitButton, obj);
   }
 }
 
@@ -61,15 +70,15 @@ function setEventListeners(formElement, obj) {
   const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
   const submitButton = formElement.querySelector(obj.submitButtonSelector);
   //изначально они пустые и невалидные
-  toggleButtonState(inputList, submitButton);
+  toggleButtonState(inputList, submitButton, obj);
   formElement.addEventListener("reset", () => {
-    disableButton(submitButton);
+    disableButton(submitButton, obj);
   });
   //проверяет каждое поле на валидность
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, obj);
-      toggleButtonState(inputList, submitButton);
+      toggleButtonState(inputList, submitButton, obj);
     });
   });
 }

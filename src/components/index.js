@@ -1,8 +1,20 @@
 import "../pages/index.css";
 
-import { closePopup, handleProfileFormSubmit, openPopup } from "./modal.js";
+import {
+  closePopup,
+  handleProfileFormSubmit,
+  openPopup,
+  popupName,
+  popupAboutYourself,
+} from "./modal.js";
 
-import { popupEditorForm, popupAddPlace, userPlaceForm } from "./utils.js";
+import {
+  popupEditorForm,
+  popupAddPlace,
+  userPlaceForm,
+  profileName,
+  profileOccupation,
+} from "./utils.js";
 
 import { enableValidation } from "./validate.js";
 
@@ -24,6 +36,8 @@ const popups = Array.from(document.querySelectorAll(".popup"));
 
 editPopupButton.addEventListener("click", function () {
   openPopup(popupEditorForm);
+  popupName.value = profileName.textContent;
+  popupAboutYourself.value = profileOccupation.textContent;
 });
 
 addButton.addEventListener("click", function () {

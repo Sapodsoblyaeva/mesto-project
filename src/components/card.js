@@ -35,10 +35,10 @@ const openingText = document.querySelector(".image-popup__text");
 const cardsOnLine = document.querySelector(".places");
 const userPlaceName = document.querySelector("#place-name");
 const userPlaceImage = document.querySelector("#photo-link");
+const cardsTemplate = document.querySelector("#places__cards").content;
 
 function createCard(cardName, cardLink) {
   //копировать темплейт
-  const cardsTemplate = document.querySelector("#places__cards").content;
   const cardItem = cardsTemplate
     .querySelector(".places__cards")
     .cloneNode(true);

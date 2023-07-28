@@ -24,4 +24,4 @@ function handleProfileFormSubmit(evt) {
   addProfileData(popupName.value, popupAboutYourself.value);
 }
 
-export { closePopup, handleProfileFormSubmit, openPopup };
+export { closePopup, handleProfileFormSubmit, openPopup, popupName, popupAboutYourself};

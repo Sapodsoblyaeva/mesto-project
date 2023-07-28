@@ -19,22 +19,12 @@ function closeByEsc(evt) {
   }
 }
 
-function disableButton(submitButton) {
-  submitButton.setAttribute("disabled", "disabled");
-  submitButton.classList.add("popup__submit-button_inactive");
-}
-
-function enableButton(submitButton) {
-  submitButton.removeAttribute("disabled");
-  submitButton.classList.remove("popup__submit-button_inactive");
-}
-
 export {
   addProfileData,
   popupEditorForm,
   popupAddPlace,
   userPlaceForm,
   closeByEsc,
-  disableButton,
-  enableButton,
+  profileName,
+  profileOccupation
 };
