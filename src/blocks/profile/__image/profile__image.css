@@ -1,0 +1,14 @@
+.profile__image {
+  position: relative;
+  grid-area: image;
+  width: 120px;
+  height: 120px;
+}
+
+.profile__image:hover .profile__avatar-edit-button {
+  visibility: visible;
+}
+
+.profile__image:hover {
+  opacity: 0.3;
+}

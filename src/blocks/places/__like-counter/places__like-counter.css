@@ -1,0 +1,7 @@
+.places__like-counter {
+  color: #000;
+  font-weight: 400;
+  font-size: 13px;
+  margin: 0;
+  grid-area: "like-counter";
+}

@@ -1,19 +1,19 @@
-.profile {
+.profile__template {
   max-width: 880px;
   width: 100%;
   display: grid;
   grid-template-columns: 120px 336px 150px;
   grid-template-areas:
-    "image info . add-button"
-    "image occupation . add-button"
-    "image . . add-button";
+    "avatar info . add-button"
+    "avatar occupation . add-button"
+    "avatar . . add-button";
   column-gap: 30px;
   row-gap: 16px;
   margin: 40px auto 0;
 }
 
 @media screen and (max-width: 1023px) {
-  .profile {
+  .profile__template {
     max-width: 282px;
     margin: 42px auto 0;
     display: flex;

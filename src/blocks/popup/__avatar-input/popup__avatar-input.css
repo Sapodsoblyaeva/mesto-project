@@ -1,0 +1,12 @@
+.popup__avatar-input {
+  margin: 54px 0 48px;
+  max-width: 358px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1023px) {
+  .popup__avatar-input {
+    max-width: 238px;
+    margin: 54px 0 18px;
+  }
+}

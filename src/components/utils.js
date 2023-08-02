@@ -3,14 +3,9 @@ import { closePopup } from "./modal";
 const popupEditorForm = document.querySelector(".editor-form");
 const popupAddPlace = document.querySelector(".add-places");
 const userPlaceForm = document.forms["place__adder"];
-const profileName = document.querySelector(".profile__name");
-const profileOccupation = document.querySelector(".profile__occupation");
-
-function addProfileData(nameValue, occupationValue) {
-  //добавить имя и занятие в профайл
-  profileName.textContent = nameValue;
-  profileOccupation.textContent = occupationValue;
-}
+const profileSubmitButtons = Array.from(
+  document.querySelectorAll(".popup__submit-button")
+);
 
 function closeByEsc(evt) {
   if (evt.key === "Escape") {
@@ -19,12 +14,27 @@ function closeByEsc(evt) {
   }
 }
 
+function renderLoading(isLoading) {
+  if (isLoading) {
+    profileSubmitButtons.forEach((item) => {
+      item.textContent = "Сохранение...";
+    });
+  } else {
+    profileSubmitButtons.forEach((item) => {
+      item.textContent = "Сохранить";
+    });
+  }
+}
+
+function resetForm(formName) {
+  formName.reset();
+}
+
 export {
-  addProfileData,
   popupEditorForm,
   popupAddPlace,
   userPlaceForm,
   closeByEsc,
-  profileName,
-  profileOccupation
+  renderLoading,
+  resetForm,
 };

@@ -1,4 +1,6 @@
-import { addProfileData, popupEditorForm, closeByEsc } from "./utils.js";
+import { popupEditorForm, closeByEsc } from "./utils.js";
+import { changeProfileData } from "./api.js";
+import { addProfileData } from "./profile.js";
 
 const popupName = document.querySelector("#name");
 const popupAboutYourself = document.querySelector("#about-yourself");
@@ -21,7 +23,14 @@ function handleProfileFormSubmit(evt) {
   //чтобы окошко закрывалось при отправке формы
   //добавлена проверка на заполненность и валидность полей
   closePopup(popupEditorForm);
+  changeProfileData(popupName.value, popupAboutYourself.value);
   addProfileData(popupName.value, popupAboutYourself.value);
 }
 
-export { closePopup, handleProfileFormSubmit, openPopup, popupName, popupAboutYourself};
+export {
+  closePopup,
+  handleProfileFormSubmit,
+  openPopup,
+  popupName,
+  popupAboutYourself,
+};

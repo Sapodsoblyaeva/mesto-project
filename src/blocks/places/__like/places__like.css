@@ -1,0 +1,11 @@
+.places__like {
+  grid-area: "place-like";
+  display: grid;
+  grid-template-areas:
+    "icon-like"
+    ". like-counter .";
+  justify-items: center;
+  margin: 0;
+  row-gap: 7px;
+  margin-right: 20px;
+}

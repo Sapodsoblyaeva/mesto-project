@@ -1,24 +1,21 @@
 import "../pages/index.css";
 
-import {
-  closePopup,
-  handleProfileFormSubmit,
-  openPopup,
-  popupName,
-  popupAboutYourself,
-} from "./modal.js";
+import { closePopup, handleProfileFormSubmit, openPopup } from "./modal.js";
 
-import {
-  popupEditorForm,
-  popupAddPlace,
-  userPlaceForm,
-  profileName,
-  profileOccupation,
-} from "./utils.js";
+import { popupEditorForm, popupAddPlace, userPlaceForm } from "./utils.js";
 
 import { enableValidation } from "./validate.js";
 
-import { setInitialCards, addCard } from "./card.js";
+import { addCard } from "./card.js";
+
+import { setInitialProfile, setInitialCardsSet } from "./api";
+
+import {
+  profileAvatarEditButton,
+  changeAvatar,
+  avatar,
+  avatarChangeForm,
+} from "./profile.js";
 
 enableValidation({
   formSelector: ".popup__form",
@@ -30,15 +27,10 @@ enableValidation({
   activeInputErrorClass: "popup__info-error_active",
 });
 
-const editPopupButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const popups = Array.from(document.querySelectorAll(".popup"));
 
-editPopupButton.addEventListener("click", function () {
-  openPopup(popupEditorForm);
-  popupName.value = profileName.textContent;
-  popupAboutYourself.value = profileOccupation.textContent;
-});
+setInitialProfile();
 
 addButton.addEventListener("click", function () {
   openPopup(popupAddPlace);
@@ -46,9 +38,13 @@ addButton.addEventListener("click", function () {
 
 popupEditorForm.addEventListener("submit", handleProfileFormSubmit);
 
-setInitialCards();
+setInitialCardsSet();
 
 userPlaceForm.addEventListener("submit", addCard);
+
+profileAvatarEditButton.addEventListener("click", function () {
+  openPopup(avatar);
+});
 
 //чтобы закрывались попапы по эскейпу и оверлею
 popups.forEach((popup) => {
@@ -62,3 +58,5 @@ popups.forEach((popup) => {
     }
   });
 });
+
+avatarChangeForm.addEventListener("submit", changeAvatar);
