@@ -4,7 +4,7 @@ const popupEditorForm = document.querySelector(".editor-form");
 const popupAddPlace = document.querySelector(".add-places");
 const userPlaceForm = document.forms["place__adder"];
 const profileSubmitButtons = Array.from(
-  document.querySelectorAll(".popup__submit-button")
+  document.querySelectorAll(".popup__save-button")
 );
 
 function closeByEsc(evt) {

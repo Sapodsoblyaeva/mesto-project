@@ -46,9 +46,9 @@ const setInitialCardsSet = () => {
             const cardSet = createCard(
               obj[a][b].name,
               obj[a][b].link,
+              obj[a][b].likes.length,
               obj[a][b].owner.name,
               obj[a][b]._id,
-              obj[a][b].likes
             );
             renderCard(cardSet);
           }

@@ -35,7 +35,7 @@ function countLikes(cardLikes) {
   return cardLikes;
 }
 
-function createCard(cardName, cardLink, cardOwner, cardImageID, cardLikes) {
+function createCard(cardName, cardLink, cardLikesCount, cardOwner, cardImageID) {
   //копировать темплейт
   const cardItem = cardsTemplate
     .querySelector(".places__cards")
@@ -49,23 +49,16 @@ function createCard(cardName, cardLink, cardOwner, cardImageID, cardLikes) {
   placeImage.src = cardLink;
   placeImage.alt = cardName + `. Фото живописного места.`;
   //для первоначального отображения кол-во лайков
-  if (cardLikes.join("") == "") {
-    placeLikeCounter.textContent = 0;
-  } else {
-    placeLikeCounter.textContent = cardLikes.length;
-    if (cardLikes.some((elem) => elem.name === profileName.textContent)) {
-      placeLike.classList.add("places__like-icon_enabled");
-    }
-  }
+  placeLikeCounter.textContent = cardLikesCount;
   //слушатель для кнопки like
   placeLike.addEventListener("click", function (evt) {
     placeLike.classList.toggle("places__like-icon_enabled");
     if (evt.target.classList.contains("places__like-icon_enabled")) {
       likeCard(cardImageID);
-      placeLikeCounter.textContent = cardLikes.length + 1;
+      placeLikeCounter.textContent = cardLikesCount + 1;
     } else {
       dislikeCard(cardImageID);
-      placeLikeCounter.textContent = cardLikes.length;
+      placeLikeCounter.textContent = cardLikesCount;
     }
   });
   //проверка, что карточка создана мной
@@ -105,7 +98,7 @@ function addCard(event) {
   event.preventDefault();
   closePopup(popupAddPlace);
   //вставить в разметку
-  const cardNew = createCard(userPlaceName.value, userPlaceImage.value);
+  const cardNew = createCard(userPlaceName.value, userPlaceImage.value, 0);
   renderCard(cardNew);
   addNewUserCard(userPlaceName.value, userPlaceImage.value);
   resetForm(userPlaceForm);
