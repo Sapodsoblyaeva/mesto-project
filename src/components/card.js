@@ -75,15 +75,15 @@ function createCard(
         })
         .catch((error) => console.error(error));
     });
-    placeImage.addEventListener("click", function () {
-      openPopup(popupImage);
-      openingImage.src = placeImage.src;
-      openingImage.alt = placeImage.alt;
-      openingText.textContent = placeName.textContent;
-    });
   } else {
     makeDeleteButtonInactive(placeDelete);
   }
+  placeImage.addEventListener("click", function () {
+    openPopup(popupImage);
+    openingImage.src = placeImage.src;
+    openingImage.alt = placeImage.alt;
+    openingText.textContent = placeName.textContent;
+  });
   //создать карточку, не вставляя в разметку
   return cardItem;
 }
