@@ -44,5 +44,3 @@
 @import url(../blocks/popup/__info-error/popup__info-error.css);
 @import url(../blocks/popup/__info-error/_active/popup__info-error_active.css);
 @import url(../blocks/popup/__info/_type_error/popup__info_type_error.css);
-@import url(../blocks/popup/__commit-button/popup__commit-button.css);
-@import url(../blocks/popup/__avatar-input/popup__avatar-input.css);

@@ -1,9 +1,13 @@
-import { popupEditorForm, closeByEsc } from "./utils.js";
-import { changeProfileData } from "./api.js";
-import { addProfileData } from "./profile.js";
+import { closeByEsc } from "./utils.js";
+
+import { setInitialProfile } from "./api.js";
 
 const popupName = document.querySelector("#name");
 const popupAboutYourself = document.querySelector("#about-yourself");
+const profile = document.querySelector(".profile");
+const profileName = profile.querySelector(".profile__name");
+const profileAvatar = profile.querySelector(".profile__avatar");
+const profileOccupation = profile.querySelector(".profile__occupation");
 
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
@@ -17,20 +21,42 @@ function closePopup(popupElement) {
   document.removeEventListener("keydown", closeByEsc);
 }
 
-function handleProfileFormSubmit(evt) {
-  //чтобы не было перезагрузки
-  evt.preventDefault();
-  //чтобы окошко закрывалось при отправке формы
-  //добавлена проверка на заполненность и валидность полей
-  closePopup(popupEditorForm);
-  changeProfileData(popupName.value, popupAboutYourself.value);
-  addProfileData(popupName.value, popupAboutYourself.value);
+function addProfileData(nameValue, occupationValue) {
+  //добавить имя и занятие в профайл
+  profileName.textContent = nameValue;
+  profileOccupation.textContent = occupationValue;
+}
+
+function createProfile(profileID, profileImage, profileAbout) {
+  profileName.textContent = profileID;
+  profileAvatar.src = profileImage;
+  profileOccupation.textContent = profileAbout;
+  popupName.value = profileID;
+  popupAboutYourself.value = profileAbout;
+  profile.prepend();
+}
+
+function setProfile() {
+  setInitialProfile()
+    .then((result) => {
+      createProfile(result.name, result.avatar, result.about);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function addAvatarUrl(avatarUrl) {
+  profileAvatar.src = avatarUrl;
 }
 
 export {
   closePopup,
-  handleProfileFormSubmit,
   openPopup,
   popupName,
   popupAboutYourself,
+  setProfile,
+  profileName,
+  addAvatarUrl,
+  addProfileData,
 };

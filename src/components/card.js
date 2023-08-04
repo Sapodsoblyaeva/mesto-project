@@ -1,15 +1,11 @@
-import { closePopup, openPopup } from "./modal.js";
-
-import { popupAddPlace, userPlaceForm, resetForm } from "./utils.js";
+import { openPopup, profileName } from "./modal.js";
 
 import {
-  addNewUserCard,
   deleteCardFromServer,
   likeCard,
   dislikeCard,
+  setInitialCardsSet,
 } from "./api.js";
-
-import { profileName } from "./profile.js";
 
 const popupImage = document.querySelector(".image-popup");
 const openingImage = document.querySelector(".image-popup__photo");
@@ -18,8 +14,6 @@ const cardsOnLine = document.querySelector(".places");
 const userPlaceName = document.querySelector("#place-name");
 const userPlaceImage = document.querySelector("#photo-link");
 const cardsTemplate = document.querySelector("#places__cards").content;
-const commitButton = document.querySelector(".popup__commit-button");
-const requestForConfirmationPopup = document.querySelector(".delete-card");
 
 function makeDeleteButtonInactive(deleteButton) {
   deleteButton.classList.add("places__delete-button_inactive");
@@ -31,11 +25,13 @@ function makeDeleteButtonActive(deleteButton) {
   deleteButton.removeAttribute("disabled");
 }
 
-function countLikes(cardLikes) {
-  return cardLikes;
-}
-
-function createCard(cardName, cardLink, cardLikesCount, cardOwner, cardImageID) {
+function createCard(
+  cardName,
+  cardLink,
+  cardLikesCount,
+  cardOwner,
+  cardImageID
+) {
   //копировать темплейт
   const cardItem = cardsTemplate
     .querySelector(".places__cards")
@@ -52,40 +48,42 @@ function createCard(cardName, cardLink, cardLikesCount, cardOwner, cardImageID) 
   placeLikeCounter.textContent = cardLikesCount;
   //слушатель для кнопки like
   placeLike.addEventListener("click", function (evt) {
-    placeLike.classList.toggle("places__like-icon_enabled");
+    likeCard(cardImageID)
+      .then((result) => {
+        placeLike.classList.add("places__like-icon_enabled");
+        placeLikeCounter.textContent = result.likes.length;
+      })
+      .catch((error) => console.error(error));
     if (evt.target.classList.contains("places__like-icon_enabled")) {
-      likeCard(cardImageID);
-      placeLikeCounter.textContent = cardLikesCount + 1;
-    } else {
-      dislikeCard(cardImageID);
-      placeLikeCounter.textContent = cardLikesCount;
+      dislikeCard(cardImageID)
+        .then((result) => {
+          placeLikeCounter.textContent = result.likes.length;
+          placeLike.classList.remove("places__like-icon_enabled");
+        })
+        .catch((error) => console.error(error));
     }
   });
   //проверка, что карточка создана мной
   if (cardOwner === profileName.textContent) {
     makeDeleteButtonActive(placeDelete);
     //слушатель для кнопки удалить
-    placeDelete.addEventListener("click", function (evt) {
-      openPopup(requestForConfirmationPopup);
-      commitButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        //удалить карточку содержащую кнопку удаления
-        placeDelete.closest(".places__cards").remove();
-        //чтобы удалилось с сервера
-        deleteCardFromServer(cardImageID);
-        closePopup(requestForConfirmationPopup);
-      });
+    placeDelete.addEventListener("click", function () {
+      //чтобы удалилось с сервера
+      deleteCardFromServer(cardImageID)
+        .then((result) => {
+          placeDelete.closest(".places__cards").remove();
+        })
+        .catch((error) => console.error(error));
+    });
+    placeImage.addEventListener("click", function () {
+      openPopup(popupImage);
+      openingImage.src = placeImage.src;
+      openingImage.alt = placeImage.alt;
+      openingText.textContent = placeName.textContent;
     });
   } else {
     makeDeleteButtonInactive(placeDelete);
   }
-
-  placeImage.addEventListener("click", function () {
-    openPopup(popupImage);
-    openingImage.src = placeImage.src;
-    openingImage.alt = placeImage.alt;
-    openingText.textContent = placeName.textContent;
-  });
   //создать карточку, не вставляя в разметку
   return cardItem;
 }
@@ -94,14 +92,30 @@ function renderCard(card) {
   cardsOnLine.prepend(card);
 }
 
-function addCard(event) {
-  event.preventDefault();
-  closePopup(popupAddPlace);
-  //вставить в разметку
-  const cardNew = createCard(userPlaceName.value, userPlaceImage.value, 0);
-  renderCard(cardNew);
-  addNewUserCard(userPlaceName.value, userPlaceImage.value);
-  resetForm(userPlaceForm);
+function setInitialCards() {
+  setInitialCardsSet()
+    .then((result) => {
+      result.forEach((item) => {
+        const cardSet = createCard(
+          item.name,
+          item.link,
+          item.likes.length,
+          item.owner.name,
+          item._id
+        );
+        renderCard(cardSet);
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
-export { createCard, renderCard, addCard, cardsTemplate, countLikes };
+export {
+  createCard,
+  renderCard,
+  cardsTemplate,
+  setInitialCards,
+  userPlaceName,
+  userPlaceImage,
+};

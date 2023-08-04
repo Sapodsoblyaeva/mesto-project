@@ -8,7 +8,3 @@
 .profile__image:hover .profile__avatar-edit-button {
   visibility: visible;
 }
-
-.profile__image:hover {
-  opacity: 0.3;
-}

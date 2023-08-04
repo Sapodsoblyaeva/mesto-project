@@ -9,6 +9,7 @@
   padding-bottom: 13px;
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   box-sizing: border-box;
+  margin-bottom: 30px;
 }
 
 .popup__info::placeholder {
@@ -37,6 +38,10 @@
   line-height: 17px;
   font-weight: 400;
   color: #c4c4c4;
+}
+
+.popup__info:last-of-type {
+  margin-bottom: 0px
 }
 
 @media screen and (max-width: 1023px) {
