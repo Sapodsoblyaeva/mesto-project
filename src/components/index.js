@@ -1,34 +1,25 @@
 import "../pages/index.css";
 
-import {
-  setProfile,
-  closePopup,
-  openPopup,
-  addAvatarUrl,
-  addProfileData,
-  popupName,
-  popupAboutYourself,
-} from "./modal.js";
+import { closePopup, openPopup } from "./modal.js";
 
-import {
-  popupEditorForm,
-  popupAddPlace,
-  userPlaceForm,
-  resetForm,
-  renderLoading,
-} from "./utils.js";
+import { resetForm, renderLoading } from "./utils.js";
 
 import { enableValidation } from "./validate.js";
 
 import {
-  setInitialCards,
   userPlaceName,
   userPlaceImage,
   createCard,
   renderCard,
 } from "./card.js";
 
-import { addNewUserCard, changeProfileAvatar, changeProfileData } from "./api";
+import {
+  addNewUserCard,
+  changeProfileAvatar,
+  changeProfileData,
+  setInitialProfile,
+  setInitialCardsSet,
+} from "./api";
 
 const addButton = document.querySelector(".profile__add-button");
 const popups = Array.from(document.querySelectorAll(".popup"));
@@ -37,6 +28,16 @@ const profileAvatarEditor = document.querySelector(".profile__image");
 const avatar = document.querySelector(".avatar");
 const avatarImage = avatar.querySelector("#avatar-link");
 const avatarChangeForm = document.forms["avatar__change"];
+const profile = document.querySelector(".profile");
+const profileName = profile.querySelector(".profile__name");
+const profileAvatar = profile.querySelector(".profile__avatar");
+const profileOccupation = profile.querySelector(".profile__occupation");
+const popupName = document.querySelector("#name");
+const popupAboutYourself = document.querySelector("#about-yourself");
+const popupEditorForm = document.querySelector(".editor-form");
+const popupAddPlace = document.querySelector(".add-places");
+const userPlaceForm = document.forms["place__adder"];
+let proFileUserId = "";
 
 enableValidation({
   formSelector: ".popup__form",
@@ -48,9 +49,42 @@ enableValidation({
   activeInputErrorClass: "popup__info-error_active",
 });
 
-Promise.all([setProfile(), setInitialCards()]).catch((error) => {
-  console.error(error);
-});
+Promise.all([setInitialProfile(), setInitialCardsSet()])
+  .then(([info, initialCards]) => {
+    proFileUserId = info._id;
+    createProfile(info.name, info.avatar, info.about);
+    initialCards.forEach((item) => {
+      const cardSet = createCard(
+        item.name,
+        item.link,
+        item.likes.length,
+        item.likes,
+        item.owner._id,
+        item._id,
+        proFileUserId
+      );
+      renderCard(cardSet);
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+function addProfileData(nameValue, occupationValue) {
+  //добавить имя и занятие в профайл
+  profileName.textContent = nameValue;
+  profileOccupation.textContent = occupationValue;
+}
+
+function createProfile(profileID, profileImage, profileAbout) {
+  profileName.textContent = profileID;
+  profileAvatar.src = profileImage;
+  profileOccupation.textContent = profileAbout;
+}
+
+function addAvatarUrl(avatarUrl) {
+  profileAvatar.src = avatarUrl;
+}
 
 addButton.addEventListener("click", function () {
   openPopup(popupAddPlace);
@@ -63,8 +97,10 @@ function addCard() {
         result.name,
         result.link,
         result.likes.length,
-        result.owner.name,
-        result._id
+        result.likes,
+        result.owner._id,
+        result._id,
+        proFileUserId
       );
       renderCard(cardNew);
       closePopup(popupAddPlace);
@@ -79,8 +115,8 @@ profileAvatarEditor.addEventListener("click", function () {
   openPopup(avatar);
 });
 
-function changeAvatar() {
-  renderLoading(true);
+function changeAvatar(evt) {
+  renderLoading(true, evt.submitter);
   changeProfileAvatar(avatarImage.value)
     .then((result) => {
       addAvatarUrl(result.avatar);
@@ -91,7 +127,7 @@ function changeAvatar() {
       console.error(error);
     })
     .finally((item) => {
-      renderLoading(false);
+      renderLoading(false, evt.submitter);
     });
 }
 
@@ -99,10 +135,12 @@ avatarChangeForm.addEventListener("submit", changeAvatar);
 
 editPopupButton.addEventListener("click", function () {
   openPopup(popupEditorForm);
+  popupName.value = profileName.textContent;
+  popupAboutYourself.value = profileOccupation.textContent;
 });
 
-function handleProfileFormSubmit() {
-  renderLoading(true);
+function handleProfileFormSubmit(evt) {
+  renderLoading(true, evt.submitter);
   changeProfileData(popupName.value, popupAboutYourself.value)
     .then((result) => {
       addProfileData(result.name, result.about);
@@ -112,7 +150,7 @@ function handleProfileFormSubmit() {
       console.error(error);
     })
     .finally((item) => {
-      renderLoading(false);
+      renderLoading(false, evt.submitter);
     });
 }
 

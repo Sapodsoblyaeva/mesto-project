@@ -1,28 +1,8 @@
-import { closePopup } from "./modal";
-
-const popupEditorForm = document.querySelector(".editor-form");
-const popupAddPlace = document.querySelector(".add-places");
-const userPlaceForm = document.forms["place__adder"];
-const profileSubmitButtons = Array.from(
-  document.querySelectorAll(".popup__save-button")
-);
-
-function closeByEsc(evt) {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  }
-}
-
-function renderLoading(isLoading) {
+function renderLoading(isLoading, buttonName) {
   if (isLoading) {
-    profileSubmitButtons.forEach((item) => {
-      item.textContent = "Сохранение...";
-    });
+    buttonName.textContent = "Сохранение...";
   } else {
-    profileSubmitButtons.forEach((item) => {
-      item.textContent = "Сохранить";
-    });
+    buttonName.textContent = "Сохранить";
   }
 }
 
@@ -30,11 +10,4 @@ function resetForm(formName) {
   formName.reset();
 }
 
-export {
-  popupEditorForm,
-  popupAddPlace,
-  userPlaceForm,
-  closeByEsc,
-  renderLoading,
-  resetForm,
-};
+export { renderLoading, resetForm };

@@ -1,11 +1,6 @@
-import { openPopup, profileName } from "./modal.js";
+import { openPopup } from "./modal.js";
 
-import {
-  deleteCardFromServer,
-  likeCard,
-  dislikeCard,
-  setInitialCardsSet,
-} from "./api.js";
+import { deleteCardFromServer, likeCard, dislikeCard } from "./api.js";
 
 const popupImage = document.querySelector(".image-popup");
 const openingImage = document.querySelector(".image-popup__photo");
@@ -25,12 +20,19 @@ function makeDeleteButtonActive(deleteButton) {
   deleteButton.removeAttribute("disabled");
 }
 
+function toggleCardLikesState(likeIcon, likeCounterPlace, likeCountsQnty) {
+  likeIcon.classList.toggle("places__like-icon_enabled");
+  likeCounterPlace.textContent = likeCountsQnty;
+}
+
 function createCard(
   cardName,
   cardLink,
   cardLikesCount,
+  cardLikesArr,
   cardOwner,
-  cardImageID
+  cardImageID,
+  userId
 ) {
   //копировать темплейт
   const cardItem = cardsTemplate
@@ -47,37 +49,51 @@ function createCard(
   //для первоначального отображения кол-во лайков
   placeLikeCounter.textContent = cardLikesCount;
   //слушатель для кнопки like
-  placeLike.addEventListener("click", function (evt) {
-    likeCard(cardImageID)
-      .then((result) => {
+  if (cardLikesCount !== 0) {
+    cardLikesArr.forEach((item) => {
+      if (item._id === userId) {
         placeLike.classList.add("places__like-icon_enabled");
-        placeLikeCounter.textContent = result.likes.length;
-      })
-      .catch((error) => console.error(error));
-    if (evt.target.classList.contains("places__like-icon_enabled")) {
+      }
+    });
+  }
+  placeLike.addEventListener("click", function (evt) {
+    if (!evt.target.classList.contains("places__like-icon_enabled")) {
+      likeCard(cardImageID)
+        .then((result) => {
+          toggleCardLikesState(
+            placeLike,
+            placeLikeCounter,
+            result.likes.length
+          );
+        })
+        .catch((error) => console.error(error));
+    } else {
       dislikeCard(cardImageID)
         .then((result) => {
-          placeLikeCounter.textContent = result.likes.length;
-          placeLike.classList.remove("places__like-icon_enabled");
+          toggleCardLikesState(
+            placeLike,
+            placeLikeCounter,
+            result.likes.length
+          );
         })
         .catch((error) => console.error(error));
     }
   });
   //проверка, что карточка создана мной
-  if (cardOwner === profileName.textContent) {
-    makeDeleteButtonActive(placeDelete);
-    //слушатель для кнопки удалить
-    placeDelete.addEventListener("click", function () {
-      //чтобы удалилось с сервера
-      deleteCardFromServer(cardImageID)
-        .then((result) => {
-          placeDelete.closest(".places__cards").remove();
-        })
-        .catch((error) => console.error(error));
-    });
-  } else {
+  if (cardOwner !== userId) {
     makeDeleteButtonInactive(placeDelete);
+  } else {
+    makeDeleteButtonActive(placeDelete);
   }
+  //слушатель для кнопки удалить
+  placeDelete.addEventListener("click", function () {
+    //чтобы удалилось с сервера
+    deleteCardFromServer(cardImageID)
+      .then((result) => {
+        placeDelete.closest(".places__cards").remove();
+      })
+      .catch((error) => console.error(error));
+  });
   placeImage.addEventListener("click", function () {
     openPopup(popupImage);
     openingImage.src = placeImage.src;
@@ -92,30 +108,4 @@ function renderCard(card) {
   cardsOnLine.prepend(card);
 }
 
-function setInitialCards() {
-  setInitialCardsSet()
-    .then((result) => {
-      result.forEach((item) => {
-        const cardSet = createCard(
-          item.name,
-          item.link,
-          item.likes.length,
-          item.owner.name,
-          item._id
-        );
-        renderCard(cardSet);
-      });
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-export {
-  createCard,
-  renderCard,
-  cardsTemplate,
-  setInitialCards,
-  userPlaceName,
-  userPlaceImage,
-};
+export { createCard, renderCard, userPlaceName, userPlaceImage };

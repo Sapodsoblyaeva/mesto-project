@@ -40,8 +40,12 @@
   color: #c4c4c4;
 }
 
+.popup__info:first-of-type {
+  margin-bottom: 30px;
+}
+
 .popup__info:last-of-type {
-  margin-bottom: 0px
+  margin-bottom: 0px;
 }
 
 @media screen and (max-width: 1023px) {
