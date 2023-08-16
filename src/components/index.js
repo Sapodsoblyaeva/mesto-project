@@ -1,5 +1,7 @@
 import "../pages/index.css";
 
+import { helloWorld } from "./test.js";
+
 import { closePopup, openPopup } from "./modal.js";
 
 import { resetForm, renderLoading } from "./utils.js";
@@ -168,3 +170,5 @@ popups.forEach((popup) => {
     }
   });
 });
+
+console.log(helloWorld)
