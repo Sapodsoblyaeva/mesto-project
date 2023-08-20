@@ -1,7 +1,5 @@
 import "../pages/index.css";
 
-import { helloWorld } from "./test.js";
-
 import { closePopup, openPopup } from "./modal.js";
 
 import { resetForm, renderLoading } from "./utils.js";
@@ -11,16 +9,12 @@ import { enableValidation } from "./validate.js";
 import {
   userPlaceName,
   userPlaceImage,
-  createCard,
   renderCard,
+  Card
 } from "./card.js";
 
 import {
-  addNewUserCard,
-  changeProfileAvatar,
-  changeProfileData,
-  setInitialProfile,
-  setInitialCardsSet,
+  Api
 } from "./api";
 
 const addButton = document.querySelector(".profile__add-button");
@@ -41,6 +35,14 @@ const popupAddPlace = document.querySelector(".add-places");
 const userPlaceForm = document.forms["place__adder"];
 let proFileUserId = "";
 
+export const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/plus-cohort-27",
+  headers: {
+    authorization: "08ca101b-72c0-46c7-a5af-c036f69dd465",
+    "Content-Type": "application/json",
+  },
+});
+
 enableValidation({
   formSelector: ".popup__form",
   inputSelector: ".popup__info",
@@ -51,20 +53,14 @@ enableValidation({
   activeInputErrorClass: "popup__info-error_active",
 });
 
-Promise.all([setInitialProfile(), setInitialCardsSet()])
+Promise.all([api.setInitialProfile(), api.setInitialCardsSet()])
   .then(([info, initialCards]) => {
     proFileUserId = info._id;
     createProfile(info.name, info.avatar, info.about);
     initialCards.forEach((item) => {
-      const cardSet = createCard(
-        item.name,
-        item.link,
-        item.likes.length,
-        item.likes,
-        item.owner._id,
-        item._id,
-        proFileUserId
-      );
+      const cardSet = new Card(item,
+        proFileUserId, ".places__cards"
+      ).createCard();
       renderCard(cardSet);
     });
   })
@@ -93,16 +89,9 @@ addButton.addEventListener("click", function () {
 });
 
 function addCard() {
-  addNewUserCard(userPlaceName.value, userPlaceImage.value)
+  api.addNewUserCard(userPlaceName.value, userPlaceImage.value)
     .then((result) => {
-      const cardNew = createCard(
-        result.name,
-        result.link,
-        result.likes.length,
-        result.likes,
-        result.owner._id,
-        result._id,
-        proFileUserId
+      const cardNew = new Card(result, proFileUserId, ".places__cards"
       );
       renderCard(cardNew);
       closePopup(popupAddPlace);
@@ -119,7 +108,7 @@ profileAvatarEditor.addEventListener("click", function () {
 
 function changeAvatar(evt) {
   renderLoading(true, evt.submitter);
-  changeProfileAvatar(avatarImage.value)
+  api.changeProfileAvatar(avatarImage.value)
     .then((result) => {
       addAvatarUrl(result.avatar);
       closePopup(avatar);
@@ -143,7 +132,7 @@ editPopupButton.addEventListener("click", function () {
 
 function handleProfileFormSubmit(evt) {
   renderLoading(true, evt.submitter);
-  changeProfileData(popupName.value, popupAboutYourself.value)
+  api.changeProfileData(popupName.value, popupAboutYourself.value)
     .then((result) => {
       addProfileData(result.name, result.about);
       closePopup(popupEditorForm);
@@ -171,4 +160,3 @@ popups.forEach((popup) => {
   });
 });
 
-console.log(helloWorld)
