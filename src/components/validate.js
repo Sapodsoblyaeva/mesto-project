@@ -1,3 +1,5 @@
+
+
 function showInputError(formElement, inputElement, errorMessage, obj) {
   //подставляет конкретное id пустого поля, которое выведется
   //ошибкой пд полем ввода, например place-name-error

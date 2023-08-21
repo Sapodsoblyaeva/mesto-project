@@ -74,9 +74,7 @@ export class Card {
       .removeAttribute("disabled");
   }
   _toggleCardLikesState(likesCount) {
-    this._element
-      .querySelector(".places__like-icon")
-      .classList.toggle("places__like-icon_enabled");
+    this._placeLike.classList.toggle("places__like-icon_enabled");
     this._element.querySelector(".places__like-counter").textContent =
       likesCount;
   }
