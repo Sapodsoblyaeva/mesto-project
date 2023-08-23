@@ -2,6 +2,8 @@ import { openPopup } from "./modal.js";
 
 import { api } from "./index.js";
 
+import { PopupWithImage } from "./PopupWithImage.js";
+
 const popupImage = document.querySelector(".image-popup");
 const openingImage = document.querySelector(".image-popup__photo");
 const openingText = document.querySelector(".image-popup__text");
@@ -74,7 +76,7 @@ export class Card {
       .removeAttribute("disabled");
   }
   _toggleCardLikesState(likesCount) {
-    this._placeLike.classList.toggle("places__like-icon_enabled");
+    this._element.querySelector(".places__like-icon").classList.toggle("places__like-icon_enabled");
     this._element.querySelector(".places__like-counter").textContent =
       likesCount;
   }
@@ -104,10 +106,10 @@ export class Card {
       .catch((error) => console.error(error));
   }
   _handleImageClick () {
-    openPopup(popupImage);
-    openingImage.src = this._element.querySelector(".places__image").src;
-    openingImage.alt = this._element.querySelector(".places__image").alt;
-    openingText.textContent = this._element.querySelector(".places__name").textContent;
+    new PopupWithImage(popupImage).openPopup();
+    // openingImage.src = this._element.querySelector(".places__image").src;
+    // openingImage.alt = this._element.querySelector(".places__image").alt;
+    // openingText.textContent = this._element.querySelector(".places__name").textContent;
   }
   _setEventListeners() {
     this._element
@@ -126,12 +128,7 @@ export class Card {
   }
 }
 
-function renderCard(card) {
-  cardsOnLine.prepend(card);
-}
-
 export {
-  renderCard,
   userPlaceName,
   userPlaceImage,
 };
