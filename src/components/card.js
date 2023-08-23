@@ -7,7 +7,6 @@ import { PopupWithImage } from "./PopupWithImage.js";
 const popupImage = document.querySelector(".image-popup");
 const openingImage = document.querySelector(".image-popup__photo");
 const openingText = document.querySelector(".image-popup__text");
-const cardsOnLine = document.querySelector(".places");
 const userPlaceName = document.querySelector("#place-name");
 const userPlaceImage = document.querySelector("#photo-link");
 const cardsTemplate = document.querySelector("#places__cards").content;
@@ -106,7 +105,7 @@ export class Card {
       .catch((error) => console.error(error));
   }
   _handleImageClick () {
-    new PopupWithImage(popupImage).openPopup();
+    new PopupWithImage(popupImage, openingText.textContent, openingImage.src).openPopup();
     // openingImage.src = this._element.querySelector(".places__image").src;
     // openingImage.alt = this._element.querySelector(".places__image").alt;
     // openingText.textContent = this._element.querySelector(".places__name").textContent;

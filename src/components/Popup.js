@@ -4,17 +4,11 @@ export class Popup {
   }
   openPopup() {
     this._selector.classList.add("popup_opened");
-    //именно документ, все остальное не работает
-    document.addEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
+    this.setEventListeners();
+    this._renderLoading(false, this._selector.querySelector('.popup__submit-button'));
   }
   closePopup() {
     this._selector.classList.remove("popup_opened");
-    //именно документ, все остальное не работает
-    document.removeEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
   }
   _handleEscClose(evt) {
     if (evt.key === "Escape") {
@@ -22,6 +16,9 @@ export class Popup {
     }
   }
   setEventListeners() {
+    document.addEventListener("keydown", (evt) => {
+      this._handleEscClose(evt);
+    });
     this._selector.addEventListener("mousedown", (evt) => {
       //именно таргет, иначе закрывается и по клику на сам попап
       if (evt.target === this._selector) {
@@ -31,5 +28,12 @@ export class Popup {
         this.closePopup();
       }
     });
+  }
+  _renderLoading(isLoading, buttonName) {
+    if (isLoading) {
+      buttonName.textContent = "Сохранение...";
+    } else {
+      buttonName.textContent = "Сохранить";
+    }
   }
 }

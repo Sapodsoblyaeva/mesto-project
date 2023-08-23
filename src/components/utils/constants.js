@@ -8,3 +8,5 @@ export const formSelectors = {
   inputErrorTypeClass: "popup__info_type_error",
   activeInputErrorClass: "popup__info-error_active",
 }
+
+export const cardsOnLine = document.querySelector(".places");
