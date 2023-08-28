@@ -75,19 +75,23 @@ export class Card {
       .removeAttribute("disabled");
   }
   _toggleCardLikesState(likesCount) {
-    this._element.querySelector(".places__like-icon").classList.toggle("places__like-icon_enabled");
+    this._element
+      .querySelector(".places__like-icon")
+      .classList.toggle("places__like-icon_enabled");
     this._element.querySelector(".places__like-counter").textContent =
       likesCount;
   }
   _handleLikeClick(evt) {
     if (!evt.target.classList.contains("places__like-icon_enabled")) {
-      api.likeCard(this._cardImageID)
+      api
+        .likeCard(this._cardImageID)
         .then((result) => {
           this._toggleCardLikesState(result.likes.length);
         })
         .catch((error) => console.error(error));
     } else {
-      api.dislikeCard(this._cardImageID)
+      api
+        .dislikeCard(this._cardImageID)
         .then((result) => {
           this._toggleCardLikesState(result.likes.length);
         })
@@ -95,7 +99,8 @@ export class Card {
     }
   }
   _handleDeleteClick() {
-    api.deleteCardFromServer(this._cardImageID)
+    api
+      .deleteCardFromServer(this._cardImageID)
       .then((result) => {
         this._element
           .querySelector(".places__delete-button")
@@ -104,11 +109,9 @@ export class Card {
       })
       .catch((error) => console.error(error));
   }
-  _handleImageClick () {
-    new PopupWithImage(popupImage, openingText.textContent, openingImage.src).openPopup();
-    // openingImage.src = this._element.querySelector(".places__image").src;
-    // openingImage.alt = this._element.querySelector(".places__image").alt;
-    // openingText.textContent = this._element.querySelector(".places__name").textContent;
+  _handleImageClick() {
+    new PopupWithImage(popupImage, this._cardName, this._cardLink).openPopup();
+    console.log(this._cardName);
   }
   _setEventListeners() {
     this._element
@@ -121,13 +124,12 @@ export class Card {
       .addEventListener("click", (evt) => {
         this._handleDeleteClick();
       });
-      this._element.querySelector(".places__image").addEventListener("click", (evt) => {
+    this._element
+      .querySelector(".places__image")
+      .addEventListener("click", (evt) => {
         this._handleImageClick();
       });
   }
 }
 
-export {
-  userPlaceName,
-  userPlaceImage,
-};
+export { userPlaceName, userPlaceImage };

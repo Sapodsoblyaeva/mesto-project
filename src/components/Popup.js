@@ -5,7 +5,6 @@ export class Popup {
   openPopup() {
     this._selector.classList.add("popup_opened");
     this.setEventListeners();
-    this._renderLoading(false, this._selector.querySelector('.popup__submit-button'));
   }
   closePopup() {
     this._selector.classList.remove("popup_opened");
@@ -28,12 +27,5 @@ export class Popup {
         this.closePopup();
       }
     });
-  }
-  _renderLoading(isLoading, buttonName) {
-    if (isLoading) {
-      buttonName.textContent = "Сохранение...";
-    } else {
-      buttonName.textContent = "Сохранить";
-    }
   }
 }
