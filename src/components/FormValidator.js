@@ -3,18 +3,22 @@ export class FormValidator {
     this._obj = obj;
     this._formElement = formElement;
   }
- enableValidation() {
+  enableValidation() {
     //для каждой формы при сабмите отменяет перезагрузку и
     //выполняет проверку на валидность
-      this._formElement.addEventListener("submit", (evt) => {
-        evt.preventDefault();
-      });
-      this._setEventListeners();
+    this._formElement.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+    });
+    this._setEventListeners();
   }
   _setEventListeners() {
     //берет все поля ввода
-    const inputList = Array.from(this._formElement.querySelectorAll(this._obj.inputSelector));
-    const submitButton = this._formElement.querySelector(this._obj.submitButtonSelector);
+    const inputList = Array.from(
+      this._formElement.querySelectorAll(this._obj.inputSelector)
+    );
+    const submitButton = this._formElement.querySelector(
+      this._obj.submitButtonSelector
+    );
     //изначально они пустые и невалидные
     this._toggleButtonState(inputList, submitButton);
     this._formElement.addEventListener("reset", () => {
@@ -61,10 +65,7 @@ export class FormValidator {
       inputElement.setCustomValidity("");
     }
     if (!inputElement.validity.valid) {
-      this._showInputError(
-        inputElement,
-        inputElement.validationMessage,
-      );
+      this._showInputError(inputElement, inputElement.validationMessage);
     } else {
       this._hideInputError(inputElement);
     }
@@ -72,7 +73,9 @@ export class FormValidator {
   _showInputError(inputElement, errorMessage) {
     //подставляет конкретное id пустого поля, которое выведется
     //ошибкой пд полем ввода, например place-name-error
-    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._formElement.querySelector(
+      `.${inputElement.id}-error`
+    );
     inputElement.classList.add(this._obj.inputErrorTypeClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._obj.activeInputErrorClass);
@@ -80,10 +83,11 @@ export class FormValidator {
   _hideInputError(inputElement) {
     //подставляет конкретное id пустого поля,
     //которое обнулится после того как валидация пройдет
-    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._formElement.querySelector(
+      `.${inputElement.id}-error`
+    );
     inputElement.classList.remove(this._obj.inputErrorTypeClass);
     errorElement.classList.remove(this._obj.activeInputErrorClass);
     errorElement.textContent = "";
   }
 }
-

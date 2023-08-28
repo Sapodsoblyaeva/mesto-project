@@ -1,15 +1,13 @@
-import { openPopup } from "./modal.js";
-
 import { api } from "./index.js";
 
 import { PopupWithImage } from "./PopupWithImage.js";
 
-const popupImage = document.querySelector(".image-popup");
-const openingImage = document.querySelector(".image-popup__photo");
-const openingText = document.querySelector(".image-popup__text");
-const userPlaceName = document.querySelector("#place-name");
-const userPlaceImage = document.querySelector("#photo-link");
-const cardsTemplate = document.querySelector("#places__cards").content;
+import {
+  popupImage,
+  userPlaceName,
+  userPlaceImage,
+  cardsTemplate,
+} from "./utils/constants.js";
 
 export class Card {
   constructor(data, userId, selector) {
@@ -111,7 +109,6 @@ export class Card {
   }
   _handleImageClick() {
     new PopupWithImage(popupImage, this._cardName, this._cardLink).openPopup();
-    console.log(this._cardName);
   }
   _setEventListeners() {
     this._element

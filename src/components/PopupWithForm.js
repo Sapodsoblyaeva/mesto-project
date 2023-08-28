@@ -7,7 +7,12 @@ export class PopupWithForm extends Popup {
   }
   openPopup() {
     super.openPopup();
-    this._renderLoading(false, document.querySelector(".popup__submit-button"));
+    const submitButtons = document.querySelectorAll(".popup__submit-button");
+    submitButtons.forEach((item) => {
+      if (item.closest(".popup").classList.contains("popup_opened")) {
+        this._renderLoading(false, item);
+      }
+    });
   }
   _getInputValues() {
     this._inputList = this._selector.querySelectorAll(".popup__info");

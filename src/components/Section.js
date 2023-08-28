@@ -5,7 +5,7 @@ export class Section {
     this._selector = selector;
   }
   renderItem() {
-    this._renderedItems.forEach(item => this._renderer(item))
+    this._renderedItems.forEach((item) => this._renderer(item));
   }
   addItem(element) {
     this._selector.prepend(element);

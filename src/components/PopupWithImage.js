@@ -1,7 +1,6 @@
 import { Popup } from "./Popup.js";
 
-const openingImage = document.querySelector(".image-popup__photo");
-const openingText = document.querySelector(".image-popup__text");
+import { openingImage, openingText } from "./utils/constants.js";
 
 export class PopupWithImage extends Popup {
   constructor(selector, inputName, inputImage) {
