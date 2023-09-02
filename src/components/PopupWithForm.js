@@ -1,18 +1,13 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor({ selector, handleFormSubmit }) {
-    super(selector);
+  constructor({ popup, handleFormSubmit }) {
+    super(popup);
+    this._buttonName = this._popup.querySelector(".popup__submit-button");
     this._handleFormSubmit = handleFormSubmit;
   }
   openPopup() {
     super.openPopup();
-    const submitButtons = document.querySelectorAll(".popup__submit-button");
-    submitButtons.forEach((item) => {
-      if (item.closest(".popup").classList.contains("popup_opened")) {
-        this._renderLoading(false, item);
-      }
-    });
   }
   _getInputValues() {
     this._inputList = this._selector.querySelectorAll(".popup__info");
@@ -24,21 +19,20 @@ export class PopupWithForm extends Popup {
   }
   setEventListeners() {
     super.setEventListeners();
-    this._selector.addEventListener("submit", (evt) => {
+    this._popup.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this._renderLoading(true, evt.submitter);
     });
   }
   closePopup() {
     super.closePopup();
-    this._selector.querySelector(".popup__form").reset();
+    this._popup.querySelector(".popup__form").reset();
   }
-  _renderLoading(isLoading, buttonName) {
+  renderLoading(isLoading) {
     if (isLoading) {
-      buttonName.textContent = "Сохранение...";
+      this._buttonName.textContent = "Сохранение...";
     } else {
-      buttonName.textContent = "Сохранить";
+      this._buttonName.textContent = "Сохранить";
     }
   }
 }

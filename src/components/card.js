@@ -1,13 +1,4 @@
-import { api } from "./index.js";
-
-import { PopupWithImage } from "./PopupWithImage.js";
-
-import {
-  popupImage,
-  userPlaceName,
-  userPlaceImage,
-  cardsTemplate,
-} from "./utils/constants.js";
+import { cardsTemplate } from "./utils/constants.js";
 
 export class Card {
   constructor({
@@ -84,38 +75,13 @@ export class Card {
       .querySelector(".places__delete-button")
       .removeAttribute("disabled");
   }
-  // _toggleCardLikesState (likesCount) {
-  //   this._element
-  //     .querySelector(".places__like-icon")
-  //     .classList.toggle("places__like-icon_enabled");
-  //   this._element.querySelector(".places__like-counter").textContent =
-  //     likesCount;
-  // }
   _chooseLikeIconState(evt) {
     if (!evt.target.classList.contains("places__like-icon_enabled")) {
-      this._handleLikeClick(this._cardImageID);
-      //     // api
-      //     //   .likeCard(this._cardImageID)
-      //     //   .then((result) => {
-      //     //     this._toggleCardLikesState(result.likes.length);
-      //     //   })
-      //     //   .catch((error) => console.error(error));
+      this._handleLikeClick(this._cardImageID, this._element);
     } else {
-      //     // api
-      //     //   .dislikeCard(this._cardImageID)
-      //     //   .then((result) => {
-      //     //     this._toggleCardLikesState(result.likes.length);
-      //     //   })
-      //     //   .catch((error) => console.error(error));
-      this._handleDisLikeClick(this._cardImageID);
+      this._handleDisLikeClick(this._cardImageID, this._element);
     }
   }
-  // _handleDeleteClick() {
-  //   this._deleteCard();
-  // }
-  // _handleImageClick() {
-  //   this._openImage();
-  // }
   _setEventListeners() {
     this._element
       .querySelector(".places__like-icon")
@@ -134,5 +100,3 @@ export class Card {
       });
   }
 }
-
-export { userPlaceName, userPlaceImage };

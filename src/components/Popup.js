@@ -1,14 +1,14 @@
 export class Popup {
-  constructor(selector) {
-    this._selector = selector;
+  constructor(popup) {
+    this._popup = popup;
     this._handleEscClose = this._handleEscClose.bind(this);
   }
   openPopup() {
-    this._selector.classList.add("popup_opened");
+    this._popup.classList.add("popup_opened");
     document.addEventListener("keydown", this._handleEscClose);
   }
   closePopup() {
-    this._selector.classList.remove("popup_opened");
+    this._popup.classList.remove("popup_opened");
     document.removeEventListener("keydown", this._handleEscClose);
   }
   _handleEscClose(evt) {
@@ -17,9 +17,9 @@ export class Popup {
     }
   }
   setEventListeners() {
-    this._selector.addEventListener("mousedown", (evt) => {
+    this._popup.addEventListener("mousedown", (evt) => {
       //именно таргет, иначе закрывается и по клику на сам попап
-      if (evt.target === this._selector) {
+      if (evt.target === this._popup) {
         this.closePopup();
       }
       if (evt.target.classList.contains("popup__close-button")) {

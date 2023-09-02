@@ -1,4 +1,3 @@
-export const formList = Array.from(document.querySelectorAll(".popup__form"));
 export const formSelectors = {
   formSelector: ".popup__form",
   inputSelector: ".popup__info",
@@ -25,7 +24,6 @@ export const popupName = document.querySelector("#name");
 export const popupAboutYourself = document.querySelector("#about-yourself");
 export const popupEditorForm = document.querySelector(".editor-form");
 export const popupAddPlace = document.querySelector(".add-places");
-export const userPlaceForm = document.forms["place__adder"];
 export const popupImage = document.querySelector(".image-popup");
 export const userPlaceName = document.querySelector("#place-name");
 export const userPlaceImage = document.querySelector("#photo-link");

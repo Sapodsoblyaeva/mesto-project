@@ -18,14 +18,6 @@ export class FormValidator {
     this._setEventListeners();
   }
   _setEventListeners() {
-    //берет все поля ввода
-    // const inputList = Array.from(
-    //   this._formElement.querySelectorAll(this._obj.inputSelector)
-    // );
-    // const submitButton = this._formElement.querySelector(
-    //   this._obj.submitButtonSelector
-    // );
-    //изначально они пустые и невалидные
     this._toggleButtonState();
     this._formElement.addEventListener("reset", () => {
       this._disableButton();
