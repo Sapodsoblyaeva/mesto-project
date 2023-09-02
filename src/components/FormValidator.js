@@ -2,6 +2,12 @@ export class FormValidator {
   constructor(obj, formElement) {
     this._obj = obj;
     this._formElement = formElement;
+    this._submitButton = formElement.querySelector(
+      this._obj.submitButtonSelector
+    );
+    this._inputList = Array.from(
+      formElement.querySelectorAll(this._obj.inputSelector)
+    );
   }
   enableValidation() {
     //для каждой формы при сабмите отменяет перезагрузку и
@@ -13,45 +19,45 @@ export class FormValidator {
   }
   _setEventListeners() {
     //берет все поля ввода
-    const inputList = Array.from(
-      this._formElement.querySelectorAll(this._obj.inputSelector)
-    );
-    const submitButton = this._formElement.querySelector(
-      this._obj.submitButtonSelector
-    );
+    // const inputList = Array.from(
+    //   this._formElement.querySelectorAll(this._obj.inputSelector)
+    // );
+    // const submitButton = this._formElement.querySelector(
+    //   this._obj.submitButtonSelector
+    // );
     //изначально они пустые и невалидные
-    this._toggleButtonState(inputList, submitButton);
+    this._toggleButtonState();
     this._formElement.addEventListener("reset", () => {
-      this._disableButton(submitButton);
+      this._disableButton();
     });
     //проверяет каждое поле на валидность
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, submitButton);
+        this._toggleButtonState();
       });
     });
   }
-  _toggleButtonState(inputList, submitButton) {
+  _toggleButtonState() {
     //меняет состояние кнопки, если все инпуты из hasInvalidInput валидны
-    if (this._hasInvalidInput(inputList)) {
-      this._disableButton(submitButton);
+    if (this._hasInvalidInput(this._inputList)) {
+      this._disableButton(this._submitButton);
     } else {
-      this._enableButton(submitButton);
+      this._enableButton(this._submitButton);
     }
   }
-  _disableButton(submitButton) {
-    submitButton.setAttribute("disabled", "disabled");
-    submitButton.classList.add(this._obj.inactiveButtonClass);
+  _disableButton() {
+    this._submitButton.setAttribute("disabled", "disabled");
+    this._submitButton.classList.add(this._obj.inactiveButtonClass);
   }
-  _enableButton(submitButton) {
-    submitButton.removeAttribute("disabled");
-    submitButton.classList.remove(this._obj.inactiveButtonClass);
+  _enableButton() {
+    this._submitButton.removeAttribute("disabled");
+    this._submitButton.classList.remove(this._obj.inactiveButtonClass);
   }
-  _hasInvalidInput(inputList) {
+  _hasInvalidInput() {
     //проверка, что оба инпута валидны
     //возвращает тру, если все поля заполнены и валидны
-    return inputList.some((inputElement) => {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }

@@ -1,8 +1,8 @@
 import "../pages/index.css";
 
-import { Card } from "./card.js";
+import { Card, toggleCardLikesState } from "./Card.js";
 
-import { Api } from "./api";
+import { Api } from "./Api";
 
 import { FormValidator } from "./FormValidator.js";
 
@@ -11,6 +11,7 @@ import { Section } from "./Section.js";
 import { Popup } from "./Popup.js";
 
 import { PopupWithForm } from "./PopupWithForm.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 
 import { UserInfo } from "./UserInfo.js";
 
@@ -24,7 +25,7 @@ import {
   avatar,
   avatarImage,
   profileName,
-  profileAvatar,
+  // profileAvatar,
   profileOccupation,
   popupName,
   popupAboutYourself,
@@ -33,6 +34,8 @@ import {
   userPlaceForm,
   userPlaceName,
   userPlaceImage,
+  avatarChangeForm,
+  popupImage
 } from "./utils/constants.js";
 
 export const api = new Api({
@@ -43,21 +46,84 @@ export const api = new Api({
   },
 });
 
+const profileEditorFormValidation = new FormValidator(formSelectors, popupEditorForm);
+profileEditorFormValidation.enableValidation();
+
+const profileAvatarEditorFormValidation = new FormValidator(formSelectors, avatarChangeForm);
+profileAvatarEditorFormValidation.enableValidation();
+
+const newCardFormValidation = new FormValidator(formSelectors, popupAddPlace);
+newCardFormValidation.enableValidation();
+
+const profileEditorForm = new PopupWithForm({selector: popupEditorForm,
+  handleFormSubmit: (item) => {
+    new UserInfo({ info: item }).getUserInfo(
+      popupName.value,
+      popupAboutYourself.value
+    );
+  }})
+
+  const profileAvatarForm = new PopupWithForm({selector: avatar,
+    handleFormSubmit: (item) => {
+      new UserInfo({ info: item }).getUserAvatar(avatarImage.value);
+    },
+    })
+
+    const newCardForm = new PopupWithForm({selector: popupAddPlace,
+      handleFormSubmit: () => {}
+      })
+
+const cardLayout = new Section({}, cardsOnLine);
+
+const popupImageInstance = new PopupWithImage(popupImage);
+
+
 let proFileUserId = "";
 
 Promise.all([api.setInitialProfile(), api.setInitialCardsSet()])
   .then(([info, initialCards]) => {
     proFileUserId = info._id;
-    new UserInfo({ info: info }).setUserInfo();
+    // new UserInfo({ info: info }).setUserInfo();
     const renderedCards = new Section(
       {
-        items: initialCards,
+        items: initialCards.reverse(),
         renderer: (item) => {
-          const cardSet = new Card(
-            item,
-            proFileUserId,
-            ".places__cards"
-          ).createCard();
+          const cardSet = new Card({
+            data: item,
+            like: () => {
+      api
+        .likeCard(item._id)
+        .then((result) => {
+          // this._toggleCardLikesState(result.likes.length);
+          toggleCardLikesState(result.likes.length);
+        })
+        .catch((error) => console.error(error));
+            },
+            dislike: () => {
+      api
+        .dislikeCard(item._id)
+        .then((result) => {
+          toggleCardLikesState(result.likes.length);
+        })
+        .catch((error) => console.error(error));
+            },
+            deleteCard: () => {
+              api
+              .deleteCardFromServer(item._id)
+              .then((result) => {
+                document
+          .querySelector(".places__delete-button")
+          .closest(".places__cards")
+          .remove();
+              })
+              .catch((error) => console.error(error));
+            },
+            openImage: () => {
+              popupImageInstance.openPopup(item.name, item.link);
+            },
+            userId: proFileUserId,
+            selector: ".places__cards",
+        }).createCard();
           renderedCards.addItem(cardSet);
         },
       },
@@ -77,17 +143,14 @@ function addCard() {
   api
     .addNewUserCard(userPlaceName.value, userPlaceImage.value)
     .then((result) => {
-      const cardNew = new Card(
-        result,
-        proFileUserId,
-        ".places__cards"
-      ).createCard();
+      const cardNew = new Card({
+        data: result,
+        userId: proFileUserId,
+        selector: ".places__cards"
+    }).createCard();
       const newCard = new Section({}, cardsOnLine);
       newCard.addItem(cardNew);
-      new PopupWithForm({
-        selector: popupAddPlace,
-        handleFormSubmit: () => {},
-      }).closePopup();
+      newCardForm.closePopup();
     })
     .catch((error) => console.error(error));
 }
@@ -95,47 +158,21 @@ function addCard() {
 userPlaceForm.addEventListener("submit", addCard);
 
 profileAvatarEditor.addEventListener("click", function () {
-  new PopupWithForm({
-    selector: avatar,
-    handleFormSubmit: () => {},
-  }).openPopup();
+  profileAvatarForm.openPopup();
 });
 
-function changeAvatar() {
-  new PopupWithForm({
-    selector: avatar,
-    handleFormSubmit: (item) => {
-      new UserInfo({ info: item }).getUserAvatar(avatarImage.value);
-    },
-  }).setEventListeners();
-}
-
-changeAvatar();
+profileAvatarForm.setEventListeners();
 
 editPopupButton.addEventListener("click", function () {
-  new PopupWithForm({
-    selector: popupEditorForm,
-    handleFormSubmit: () => {},
-  }).openPopup();
+  profileEditorForm.openPopup();
   popupName.value = profileName.textContent;
   popupAboutYourself.value = profileOccupation.textContent;
 });
 
-function handleProfileFormSubmit() {
-  new PopupWithForm({
-    selector: popupEditorForm,
-    handleFormSubmit: (item) => {
-      new UserInfo({ info: item }).getUserInfo(
-        popupName.value,
-        popupAboutYourself.value
-      );
-    },
-  }).setEventListeners();
-}
+  profileEditorForm.setEventListeners();
 
-handleProfileFormSubmit();
 
-formList.forEach((item) => {
-  const form = new FormValidator(formSelectors, item);
-  form.enableValidation();
-});
+// formList.forEach((item) => {
+//   const form = new FormValidator(formSelectors, item);
+//   form.enableValidation();
+// });
