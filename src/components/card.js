@@ -59,6 +59,19 @@ export class Card {
     this._setEventListeners();
     return this._element;
   }
+  toggleCardLikesState(likesCount) {
+    this._element
+      .querySelector(".places__like-icon")
+      .classList.toggle("places__like-icon_enabled");
+    this._element.querySelector(".places__like-counter").textContent = likesCount;
+  }
+  getIdCard () {
+    return this._cardImageID
+  }
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
   _makeDeleteButtonInactive() {
     this._element
       .querySelector(".places__delete-button")
@@ -77,9 +90,9 @@ export class Card {
   }
   _chooseLikeIconState(evt) {
     if (!evt.target.classList.contains("places__like-icon_enabled")) {
-      this._handleLikeClick(this._cardImageID, this._element);
+      this._handleLikeClick(this);
     } else {
-      this._handleDisLikeClick(this._cardImageID, this._element);
+      this._handleDisLikeClick(this);
     }
   }
   _setEventListeners() {
@@ -91,7 +104,7 @@ export class Card {
     this._element
       .querySelector(".places__delete-button")
       .addEventListener("click", () => {
-        this._handleDeleteClick(this._cardImageID, this._element);
+        this._handleDeleteClick(this);
       });
     this._element
       .querySelector(".places__image")
