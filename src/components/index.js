@@ -8,8 +8,6 @@ import { FormValidator } from "./FormValidator.js";
 
 import { Section } from "./Section.js";
 
-import { Popup } from "./Popup.js";
-
 import { PopupWithForm } from "./PopupWithForm.js";
 
 import { PopupWithImage } from "./PopupWithImage.js";
@@ -24,9 +22,6 @@ import {
   profileAvatarEditor,
   avatar,
   avatarImage,
-  profileName,
-  profileAvatar,
-  profileOccupation,
   popupName,
   popupAboutYourself,
   popupEditorForm,
@@ -48,30 +43,27 @@ const api = new Api({
   },
 });
 
-const cardLayOut = new Section(
-  {
-    renderer: (item) => {
-      const cardNew = getNewCard(item);
-      cardLayOut.addItem(cardNew);
-    },
-    selector: cardsOnLine,
+const userInfo = new UserInfo({
+  nameSelector: "profile__name",
+  jobSelector: "profile__occupation",
+  avatarSelector: "profile__avatar",
+});
+
+const cardLayOut = new Section({
+  renderer: (item) => {
+    const cardNew = getNewCard(item);
+    cardLayOut.addItem(cardNew);
   },
-);
+  selector: cardsOnLine,
+});
 
 Promise.all([api.setInitialProfile(), api.setInitialCardsSet()])
   .then(([info, initialCards]) => {
     proFileUserId = info._id;
-    getProfile(info).setUserInfo(profileName, profileAvatar, profileOccupation);
-    // cardLayOut.items = initialCards.reverse();
-    // cardLayOut.rendeder = () => {
-    //   getNewCard(item);
-    //   cardLayOut.addItem(cardNew);
-    // }
-    // console.log(cardLayOut.items)
-    // console.log(cardLayOut)
+    console.log(info.avatar);
+    userInfo.setUserInfo(info.name, info.about);
+    userInfo.setUserAvatar(info.avatar);
     cardLayOut.renderItem(initialCards.reverse());
-    // createCard(initialCards.reverse());
-    // console.log(initialCards.reverse())
   })
   .catch((error) => {
     console.error(error);
@@ -99,27 +91,10 @@ const profileEditorForm = new PopupWithForm({
   },
 });
 
-function getProfile(data) {
-  const newProfile = new UserInfo({ info: data });
-  return newProfile;
-}
-
-function setUserInfo(data) {
-  const newProfile = getProfile(data);
-  return newProfile.setUserInfo(profileName, profileAvatar, profileOccupation);
-}
-
-function getProfileData() {
-  api.setInitialProfile().then((result) => {
-    const profile = getProfile(result);
-    const profileData = profile.getUserInfo();
-    popupName.value = profileData.name;
-    popupAboutYourself.value = profileData.about;
-  });
-}
-
 editPopupButton.addEventListener("click", function () {
-  getProfileData();
+  const profileData = userInfo.getUserInfo();
+  popupName.value = profileData.userName;
+  popupAboutYourself.value = profileData.userJob;
   profileEditorForm.openPopup();
 });
 
@@ -177,19 +152,10 @@ function handleImageClick(inputName, inputImage) {
   popupImageInstance.openPopup(inputName, inputImage);
 }
 
-// function toggleCardLikesState(likesCount, cardElement) {
-//   cardElement
-//     .querySelector(".places__like-icon")
-//     .classList.toggle("places__like-icon_enabled");
-//   cardElement.querySelector(".places__like-counter").textContent = likesCount;
-// }
-
 function handleLikeClick(cardInstance) {
   api
     .likeCard(cardInstance.getIdCard())
     .then((result) => {
-      // console.log(cardElement);
-      // console.log(result);
       cardInstance.toggleCardLikesState(result.likes.length);
     })
     .catch((error) => console.error(error));
@@ -199,8 +165,6 @@ function handleDisLikeClick(cardInstance) {
   api
     .dislikeCard(cardInstance.getIdCard())
     .then((result) => {
-      // console.log(result);
-      // console.log(cardElement);
       cardInstance.toggleCardLikesState(result.likes.length);
     })
     .catch((error) => console.error(error));
@@ -228,20 +192,6 @@ function getNewCard(card) {
   return newCard.createCard();
 }
 
-// function createCard(cards) {
-//   const cardLayOut = new Section(
-//     {
-//       items: cards,
-//       renderer: (item) => {
-//         const cardNew = getNewCard(item).createCard();
-//         cardLayOut.addItem(cardNew);
-//       },
-//     },
-//     cardsOnLine
-//   );
-//   return cardLayOut.renderItem();
-// }
-
 const newCardForm = new PopupWithForm({
   popup: popupAddPlace,
   handleFormSubmit: () => {
@@ -257,12 +207,8 @@ function addNewCard() {
   api
     .addNewUserCard(userPlaceName.value, userPlaceImage.value)
     .then((result) => {
-      // console.log(result.name)
-      // let newCard = [];
-      // newCard.push(result);
       const thisCard = getNewCard(result);
-      cardLayOut.addItem(thisCard)
-      // createCard(newCard);
+      cardLayOut.addItem(thisCard);
       newCardForm.closePopup();
     })
     .catch((error) => console.error(error));
