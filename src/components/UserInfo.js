@@ -4,7 +4,6 @@ export class UserInfo {
     this._userJob = document.querySelector(`.${jobSelector}`);
     this._userAvatar = document.querySelector(`.${avatarSelector}`);
   }
-
   getUserInfo() {
     return {
       userName: this._userName.textContent,
@@ -12,12 +11,10 @@ export class UserInfo {
       avatar: this._userAvatar.src,
     };
   }
-
   setUserInfo(name, job) {
     this._userName.textContent = name;
     this._userJob.textContent = job;
   }
-
   setUserAvatar(avatar) {
     this._userAvatar.src = avatar;
   }

@@ -63,10 +63,11 @@ export class Card {
     this._element
       .querySelector(".places__like-icon")
       .classList.toggle("places__like-icon_enabled");
-    this._element.querySelector(".places__like-counter").textContent = likesCount;
+    this._element.querySelector(".places__like-counter").textContent =
+      likesCount;
   }
-  getIdCard () {
-    return this._cardImageID
+  getIdCard() {
+    return this._cardImageID;
   }
   deleteCard() {
     this._element.remove();

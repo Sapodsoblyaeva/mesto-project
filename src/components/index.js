@@ -60,7 +60,6 @@ const cardLayOut = new Section({
 Promise.all([api.setInitialProfile(), api.setInitialCardsSet()])
   .then(([info, initialCards]) => {
     proFileUserId = info._id;
-    console.log(info.avatar);
     userInfo.setUserInfo(info.name, info.about);
     userInfo.setUserAvatar(info.avatar);
     cardLayOut.renderItem(initialCards.reverse());
@@ -103,7 +102,7 @@ function handleEditorFormSubmit() {
   api
     .changeProfileData(popupName.value, popupAboutYourself.value)
     .then((result) => {
-      setUserInfo(result);
+      userInfo.setUserInfo(result.name, result.about);
       profileEditorForm.closePopup();
     })
     .catch((error) => {
@@ -132,7 +131,7 @@ function handleAvatarFormSubmit() {
   api
     .changeProfileAvatar(avatarImage.value)
     .then((result) => {
-      setUserInfo(result);
+      userInfo.setUserAvatar(result.avatar);
       profileAvatarForm.closePopup();
     })
     .catch((error) => {
